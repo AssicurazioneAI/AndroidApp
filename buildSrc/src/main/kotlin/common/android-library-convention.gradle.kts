@@ -34,6 +34,11 @@ dependencies {
     implementation(Deps.androidxCore)
     implementation(Deps.appCompat)
     implementation(Deps.materialDesign)
+    implementation(Deps.constraintLayout)
+    implementation(Deps.timber)
+    implementation(Deps.koin)
+    implementation(Deps.coroutineCore)
+
     testImplementation(TestingDeps.junit)
     androidTestImplementation(TestingDeps.junitRunner)
     androidTestImplementation(TestingDeps.espresso)

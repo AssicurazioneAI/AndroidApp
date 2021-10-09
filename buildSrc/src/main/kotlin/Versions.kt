@@ -6,6 +6,8 @@ object Versions {
     const val materialDesign="1.4.0"
     const val constraintLayout="2.1.1"
     const val timber="4.7.1"
+    const val koin="3.1.2"
+    const val coroutine="1.5.2"
 
     //Testing Libraries Versions
     const val jUnit="4.12"

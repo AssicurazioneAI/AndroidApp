@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
+    kotlin("kapt")
+
 }
 
 android {
@@ -32,15 +34,25 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":data"))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.data))
 
     implementation(Deps.androidxCore)
     implementation(Deps.appCompat)
     implementation(Deps.materialDesign)
+    implementation(Deps.constraintLayout)
+    implementation(Deps.timber)
+    implementation(Deps.koin)
+    implementCoroutine()
+
     testImplementation(TestingDeps.junit)
     androidTestImplementation(TestingDeps.junitRunner)
     androidTestImplementation(TestingDeps.espresso)

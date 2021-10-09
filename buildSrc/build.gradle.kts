@@ -15,10 +15,9 @@ object PluginsVersions {
 }
 
 dependencies {
-    // android gradle plugin, required by custom plugin
+    // android gradle plugin
     implementation("com.android.tools.build:gradle:${PluginsVersions.gradlePlugin}")
-
-    // kotlin plugin, required by custom plugin
+    // kotlin plugin
     implementation(kotlin("gradle-plugin", PluginsVersions.kotlin))
 }
 
