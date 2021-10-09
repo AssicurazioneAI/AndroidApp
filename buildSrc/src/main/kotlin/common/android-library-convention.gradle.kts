@@ -36,7 +36,7 @@ dependencies {
     implementation(Deps.materialDesign)
     implementation(Deps.constraintLayout)
     implementation(Deps.timber)
-    implementation(Deps.koin)
+    implementation(Deps.koinCore)
     implementation(Deps.coroutineCore)
 
     testImplementation(TestingDeps.junit)

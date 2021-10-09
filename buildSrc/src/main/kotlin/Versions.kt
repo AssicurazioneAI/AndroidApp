@@ -8,6 +8,8 @@ object Versions {
     const val timber="4.7.1"
     const val koin="3.1.2"
     const val coroutine="1.5.2"
+    const val navigation="2.3.5"
+    const val lifecycleExtension="2.3.1"
 
     //Testing Libraries Versions
     const val jUnit="4.12"

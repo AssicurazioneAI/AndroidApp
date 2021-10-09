@@ -50,8 +50,11 @@ dependencies {
     implementation(Deps.materialDesign)
     implementation(Deps.constraintLayout)
     implementation(Deps.timber)
-    implementation(Deps.koin)
+    implementation(Deps.viewModel)
+    implementation(Deps.liveData)
     implementCoroutine()
+    implementNavigationComponent()
+    implementKoinAndroid()
 
     testImplementation(TestingDeps.junit)
     androidTestImplementation(TestingDeps.junitRunner)
