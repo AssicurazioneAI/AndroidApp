@@ -13,5 +13,5 @@ configure<JavaPluginConvention>{
 dependencies {
     implementation(TestingDeps.junit)
     implementation(Deps.koinCore)
-
+    implementation(Deps.coroutineCore)
 }
