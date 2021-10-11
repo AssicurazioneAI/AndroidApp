@@ -6,12 +6,16 @@ plugins {
 }
 
 configure<JavaPluginConvention>{
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {
-    implementation(TestingDeps.junit)
     implementation(Deps.koinCore)
     implementation(Deps.coroutineCore)
+
+    testImplementation(TestingDeps.coroutine)
+    testImplementation(TestingDeps.junit)
+    testImplementation(TestingDeps.truth)
+
 }
