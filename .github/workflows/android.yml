@@ -25,7 +25,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Run Tests
-        run: ./gradlew test --continue
+        run: ./gradlew test 
 
       - name: Upload Test Reports
         if: ${{ always() }}
