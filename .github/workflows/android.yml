@@ -24,7 +24,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Run Tests
+      - name: Running Tests
         run: ./gradlew test 
 
       - name: Upload Test Reports
@@ -35,7 +35,7 @@ jobs:
           path: '**/build/reports/tests/'
 
   build_apk_job:
-    name: Generate and Upload apk
+    name: Generating and Saving debug apk
     runs-on: ubuntu-latest
     steps:
 
