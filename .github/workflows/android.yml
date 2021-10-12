@@ -1,4 +1,4 @@
-name: Build Pull Request
+name: Test and Build Pull Request
 
 on:
   push:
@@ -24,8 +24,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Run Debug Tests
-        run: ./gradlew testDebugUnitTest --continue
+      - name: Run Tests
+        run: ./gradlew test --continue
 
       - name: Upload Test Reports
         if: ${{ always() }}
@@ -35,7 +35,7 @@ jobs:
           path: '**/build/reports/tests/'
 
   build_apk_job:
-    name: Generate and UploadBuild debug APKBuild debug APK apk
+    name: Generate and Upload apk
     runs-on: ubuntu-latest
     steps:
 
