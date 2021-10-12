@@ -1,0 +1,71 @@
+name: Distributing App on new release
+
+on:
+  push:
+    branches: [ release ]
+
+jobs:
+  test_job:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Run Tests
+        run: ./gradlew test 
+
+      - name: Upload Test Reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: '**/build/reports/tests/'
+
+          
+  assemble_distribute_job:
+    needs: [test_job]
+    name: Generate release apk and Upload to Firebase
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Building Release apk
+        env:
+          VERSION_CODE: ${{ github.run_id }}
+        run: ./gradlew assembleRelease
+        
+      - name: Saving APK to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/**.apk
+
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: development-team
+          file: app/build/outputs/apk/release/app-release.apk
