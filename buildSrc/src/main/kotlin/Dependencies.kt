@@ -3,6 +3,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 object BuildPlugins {
     val android by lazy { "com.android.tools.build:gradle:${Versions.gradlePlugin}" }
     val kotlin by lazy { "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}" }
+    val googleServices by lazy { "com.google.gms:google-services:${Versions.googleServices}" }
 }
 
 object Deps {
@@ -19,6 +20,8 @@ object Deps {
     val navigationUiComponent by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleExtension}" }
     val liveData by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleExtension}" }
+    val firebaseBom by lazy { "om.google.firebase:firebase-bom:${Versions.firebaseBom}" }
+    val firebaseAnalytics by lazy { "com.google.firebase:firebase-analytics-ktx" }
 
 }
 

@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
     kotlin("android")
     kotlin("kapt")
 
@@ -52,9 +53,13 @@ dependencies {
     implementation(Deps.timber)
     implementation(Deps.viewModel)
     implementation(Deps.liveData)
+    implementation(platform(Deps.firebaseBom))
+    implementation(platform(Deps.firebaseAnalytics))
+
     implementCoroutine()
     implementNavigationComponent()
     implementKoinAndroid()
+
 
     testImplementation(TestingDeps.junit)
     androidTestImplementation(TestingDeps.junitRunner)

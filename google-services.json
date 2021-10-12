@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "280077939085",
+    "project_id": "assicurazioneai",
+    "storage_bucket": "assicurazioneai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280077939085:android:0112db1c730e9375ad8dc4",
+        "android_client_info": {
+          "package_name": "com.mmk.assicurazioneai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280077939085-he46ckohf318mn3ollti5dfd2n6e60e9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mmk.assicurazioneai",
+            "certificate_hash": "01b37f11040cc31fe6b3d834efdd6193afbc4bff"
+          }
+        },
+        {
+          "client_id": "280077939085-elot1i86qpt6hla17kj56ms3tjmvndl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGulXcb9fdlnTIYYrXViY0AD1vajQQa9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280077939085-elot1i86qpt6hla17kj56ms3tjmvndl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
