@@ -2,9 +2,11 @@ name: Test and Build Pull Request
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - '**'
   pull_request:
-    branches: [ main ]
+    branches:
+      - '**'x
 
 jobs:
   test_job:
@@ -25,7 +27,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Running Tests
-        run: ./gradlew test 
+        run: ./gradlew test
 
       - name: Upload Test Reports
         if: ${{ always() }}

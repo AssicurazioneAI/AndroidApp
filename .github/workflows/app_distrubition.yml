@@ -1,8 +1,8 @@
 name: Distributing App on new release
 
 on:
-  push:
-    branches: [ release ]
+  release:
+    types: [ published ]
 
 jobs:
   test_job:
