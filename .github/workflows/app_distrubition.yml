@@ -1,6 +1,9 @@
 name: Distributing App on new release
 
 on:
+  push:
+    tags:
+      - 'v*'
   release:
     types: [ published ]
 
@@ -23,7 +26,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Run Tests
-        run: ./gradlew test 
+        run: ./gradlew test
 
       - name: Upload Test Reports
         if: ${{ always() }}
@@ -32,9 +35,9 @@ jobs:
           name: test-reports
           path: '**/build/reports/tests/'
 
-          
+
   assemble_distribute_job:
-    needs: [test_job]
+    needs: [ test_job ]
     name: Generate release apk and Upload to Firebase
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +58,7 @@ jobs:
         env:
           VERSION_CODE: ${{ github.run_id }}
         run: ./gradlew assembleRelease
-        
+
       - name: Saving APK to artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -69,3 +72,4 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: development-team
           file: app/build/outputs/apk/release/app-release-unsigned.apk
+          releaseNotesFile: CHANGELOG.md
