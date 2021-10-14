@@ -63,6 +63,10 @@ jobs:
           name: apk
           path: app/build/outputs/apk/release/**.apk
 
+      - name: Get the release version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
 
       - name: Create Release from tag
         id: create_release_from_tag
@@ -72,7 +76,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          name: Release ${GITHUB_REF##*/}
+          name: Release ${{ steps.get_version.outputs.VERSION }}
           body_path: CHANGELOG.md
           files: app/build/outputs/apk/release/app-release-unsigned.apk
           draft: false
