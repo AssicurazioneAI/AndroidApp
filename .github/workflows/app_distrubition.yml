@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-  release:
-    types: [ published ]
 
 jobs:
   test_job:
@@ -64,6 +62,19 @@ jobs:
         with:
           name: apk
           path: app/build/outputs/apk/release/**.apk
+
+      - name: Create Release from tag
+        id: create_release_from_tag
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
+          body_path: CHANGELOG.md
+          files: app/build/outputs/apk/release/app-release-unsigned.apk
+          draft: false
+          prerelease: false
 
       - name: Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1

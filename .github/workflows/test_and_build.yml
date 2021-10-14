@@ -1,4 +1,4 @@
-name: Test and Build Pull Request
+name: Test and Build Debug apk
 
 on:
   push:
