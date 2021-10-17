@@ -33,6 +33,8 @@ object TestingDeps {
     val koinCore by lazy { "io.insert-koin:koin-test:${Versions.koin}" }
     val koinJUnit4 by lazy { "io.insert-koin:koin-test-junit4:${Versions.koin}" }
     val coroutine by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine}" }
+    val coroutineCore by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}" }
+    val mockk by lazy { "io.mockk:mockk:${Versions.mockk}" }
 }
 
 

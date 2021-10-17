@@ -2,6 +2,7 @@ package com.mmk.domain.repository
 
 import com.google.common.truth.Truth.assertThat
 import com.mmk.domain.model.Result
+import com.mmk.domain.model.error.ErrorEntity
 import com.mmk.domain.util.MainCoroutineRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,14 +44,13 @@ class BaseRepositoryTest {
     fun `base executeInBackground returns Fail when response is failed`() =
         mainCoroutineRule.runBlockingTest {
             //Given
-            val func: () -> Result<String> = { Result.Error("Error") }
+            val func: () -> Result<String> = { Result.Error() }
             //When
             val response = baseRepository.executeInBackground {
                 func()
             }
             //Then
             assertThat(response).isInstanceOf(Result.Error::class.java)
-            assertThat((response as Result.Error).message).isEqualTo("Error")
         }
 
     //
@@ -58,15 +58,14 @@ class BaseRepositoryTest {
     fun `base executeInBackground returns Fail when function throws exception`() =
         mainCoroutineRule.runBlockingTest {
             ///Given
-            val errorMessage = "Error occurred"
-            val func: () -> Result<String> = { throw IllegalArgumentException(errorMessage) }
+            val func: () -> Result<String> = { throw IllegalArgumentException() }
             //When
             val response = baseRepository.executeInBackground {
                 func()
             }
             //Then
             assertThat(response).isInstanceOf(Result.Error::class.java)
-            assertThat((response as Result.Error).message).isEqualTo(errorMessage)
+            assertThat((response as Result.Error).errorEntity).isInstanceOf(ErrorEntity.CommonError.Unknown::class.java)
         }
 
 }
