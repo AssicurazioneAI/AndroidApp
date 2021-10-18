@@ -13,4 +13,8 @@ sealed class ErrorEntity {
         object ServerProblem : ApiError()
         data class Other(val errorMessage: String? = "") : ApiError()
     }
+
+    sealed class ImageError :ErrorEntity(){
+        object WrongFormat : ImageError()
+    }
 }

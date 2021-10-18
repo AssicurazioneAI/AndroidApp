@@ -63,7 +63,7 @@ class SendingImageUseCaseTest {
     @Test
     fun `sending image should return success when image is sent successfully`() =
         mainCoroutineRule.runBlockingTest {
-            val image: String = "Base64String"
+            val image: String = "imagePath"
 
             coEvery { imageRepository.sendImage(any()) } returns Result.Success(Unit)
             val response: Result<Unit> = sendingImageUseCase(image)
@@ -73,7 +73,7 @@ class SendingImageUseCaseTest {
     @Test
     fun `sending image should return fail when sending image is failed`() =
         mainCoroutineRule.runBlockingTest {
-            val image: String = "Base64String"
+            val image: String = "imagePath"
             val errorMessage = "Error occurred while sending an image"
             coEvery { imageRepository.sendImage(any()) } returns Result.Error(
                 errorEntity = ErrorEntity.ApiError.Other(
