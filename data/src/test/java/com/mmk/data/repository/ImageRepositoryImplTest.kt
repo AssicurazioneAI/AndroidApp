@@ -3,6 +3,7 @@ package com.mmk.data.repository
 import android.util.Base64
 import com.google.common.truth.Truth.assertThat
 import com.mmk.data.source.remote.image.ImageRemoteDataSource
+import com.mmk.data.util.ImageHelper
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity
 import com.mmk.domain.repository.image.ImageRepository
@@ -28,6 +29,7 @@ class ImageRepositoryImplTest {
 
     private lateinit var imageRepository: ImageRepository
     private lateinit var imageRemoteDataSource: ImageRemoteDataSource
+    private lateinit var imageHelper: ImageHelper
 
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
@@ -35,25 +37,30 @@ class ImageRepositoryImplTest {
     @Before
     fun setUp() {
         imageRemoteDataSource = mockk()
-        imageRepository = ImageRepositoryImpl(imageRemoteDataSource, mainCoroutineRule.dispatcher)
+        imageHelper = mockk()
+        imageRepository = ImageRepositoryImpl(imageRemoteDataSource, imageHelper,mainCoroutineRule.dispatcher)
 
     }
 
     @Test
     fun `sending image should return success when it is sent successfully to the server`() =
         mainCoroutineRule.runBlockingTest {
-            val base64Image = "Base64Image"
-            coEvery { imageRemoteDataSource.sendImage(base64Image) } returns Result.Success(Unit)
-            val response = imageRepository.sendImage(base64Image)
+            val image = "imageSrc"
+            val base64String = "Base64String"
+            every { imageHelper.getBase64StringFromImagePath(any())} returns base64String
+            coEvery { imageRemoteDataSource.sendImage(base64String) } returns Result.Success(Unit)
+            val response = imageRepository.sendImage(image)
             assertThat(response).isInstanceOf(Result.Success::class.java)
         }
 
     @Test
     fun `sending image should return error when sending failed from server side`() =
         mainCoroutineRule.runBlockingTest {
-            val base64Image = "Base64Image"
-            coEvery { imageRemoteDataSource.sendImage(base64Image) } returns Result.Error()
-            val response = imageRepository.sendImage(base64Image)
+            val image = "imageSrc"
+            val base64String = "Base64String"
+            every { imageHelper.getBase64StringFromImagePath(any())} returns base64String
+            coEvery { imageRemoteDataSource.sendImage(any()) } returns Result.Error()
+            val response = imageRepository.sendImage(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
         }
 
@@ -61,6 +68,7 @@ class ImageRepositoryImplTest {
     fun `sending image should return unknown Error when server throw exception`() =
         mainCoroutineRule.runBlockingTest {
             val base64Image = "Base64Image"
+            every { imageHelper.getBase64StringFromImagePath(any())} returns base64Image
             coEvery { imageRemoteDataSource.sendImage(base64Image) } throws Exception()
             val response = imageRepository.sendImage("imagePath")
             assertThat(response).isInstanceOf(Result.Error::class.java)
@@ -74,8 +82,7 @@ class ImageRepositoryImplTest {
         mainCoroutineRule.runBlockingTest {
             val image = "imagePath"
             val base64String = "Base64String"
-            mockkStatic(Base64::class)
-            every { Base64.encodeToString(any(), any()) } returns base64String
+            every { imageHelper.getBase64StringFromImagePath(any())} returns base64String
             val response = imageRepository.sendImage(image)
             coVerify { imageRemoteDataSource.sendImage(base64String) }
         }
@@ -84,8 +91,7 @@ class ImageRepositoryImplTest {
     fun `sendImage should return Error when image is not Base64String format`() =
         mainCoroutineRule.runBlockingTest {
             val image = "imagePath"
-            mockkStatic(Base64::class)
-            every { Base64.encodeToString(any(), any()) } returns null
+            every { imageHelper.getBase64StringFromImagePath(any())} returns null
             val response = imageRepository.sendImage(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
             response as Result.Error

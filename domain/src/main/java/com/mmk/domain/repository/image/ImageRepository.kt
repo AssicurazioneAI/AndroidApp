@@ -6,6 +6,4 @@ import java.util.*
 interface ImageRepository {
 
     suspend fun sendImage(imagePath: String): Result<Unit>
-    fun encodeBase64(image: String): String?
-
 }
