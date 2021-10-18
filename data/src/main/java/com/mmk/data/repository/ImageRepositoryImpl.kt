@@ -1,11 +1,9 @@
 package com.mmk.data.repository
 
-import android.util.Base64
 import com.mmk.data.source.remote.image.ImageRemoteDataSource
 import com.mmk.data.util.ImageHelper
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity
-import com.mmk.domain.repository.BaseRepository
 import com.mmk.domain.repository.image.ImageRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

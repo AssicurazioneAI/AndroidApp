@@ -1,12 +1,10 @@
-package com.mmk.domain.repository
+package com.mmk.data.repository
 
 import com.google.common.truth.Truth.assertThat
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity
 import com.mmk.domain.util.MainCoroutineRule
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule

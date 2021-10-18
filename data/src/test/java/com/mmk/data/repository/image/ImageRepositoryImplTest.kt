@@ -1,7 +1,7 @@
-package com.mmk.data.repository
+package com.mmk.data.repository.image
 
-import android.util.Base64
 import com.google.common.truth.Truth.assertThat
+import com.mmk.data.repository.ImageRepositoryImpl
 import com.mmk.data.source.remote.image.ImageRemoteDataSource
 import com.mmk.data.util.ImageHelper
 import com.mmk.domain.model.Result
@@ -47,7 +47,7 @@ class ImageRepositoryImplTest {
         mainCoroutineRule.runBlockingTest {
             val image = "imageSrc"
             val base64String = "Base64String"
-            every { imageHelper.getBase64StringFromImagePath(any())} returns base64String
+            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64String
             coEvery { imageRemoteDataSource.sendImage(base64String) } returns Result.Success(Unit)
             val response = imageRepository.sendImage(image)
             assertThat(response).isInstanceOf(Result.Success::class.java)
@@ -58,7 +58,7 @@ class ImageRepositoryImplTest {
         mainCoroutineRule.runBlockingTest {
             val image = "imageSrc"
             val base64String = "Base64String"
-            every { imageHelper.getBase64StringFromImagePath(any())} returns base64String
+            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64String
             coEvery { imageRemoteDataSource.sendImage(any()) } returns Result.Error()
             val response = imageRepository.sendImage(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
@@ -68,7 +68,7 @@ class ImageRepositoryImplTest {
     fun `sending image should return unknown Error when server throw exception`() =
         mainCoroutineRule.runBlockingTest {
             val base64Image = "Base64Image"
-            every { imageHelper.getBase64StringFromImagePath(any())} returns base64Image
+            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64Image
             coEvery { imageRemoteDataSource.sendImage(base64Image) } throws Exception()
             val response = imageRepository.sendImage("imagePath")
             assertThat(response).isInstanceOf(Result.Error::class.java)
@@ -82,7 +82,7 @@ class ImageRepositoryImplTest {
         mainCoroutineRule.runBlockingTest {
             val image = "imagePath"
             val base64String = "Base64String"
-            every { imageHelper.getBase64StringFromImagePath(any())} returns base64String
+            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64String
             val response = imageRepository.sendImage(image)
             coVerify { imageRemoteDataSource.sendImage(base64String) }
         }
@@ -91,7 +91,7 @@ class ImageRepositoryImplTest {
     fun `sendImage should return Error when image is not Base64String format`() =
         mainCoroutineRule.runBlockingTest {
             val image = "imagePath"
-            every { imageHelper.getBase64StringFromImagePath(any())} returns null
+            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns null
             val response = imageRepository.sendImage(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
             response as Result.Error

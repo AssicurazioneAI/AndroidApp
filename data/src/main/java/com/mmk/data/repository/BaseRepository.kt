@@ -1,4 +1,4 @@
-package com.mmk.domain.repository
+package com.mmk.data.repository
 
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity

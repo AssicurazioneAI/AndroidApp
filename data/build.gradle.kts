@@ -8,6 +8,8 @@ android{
             java.srcDirs("src/test/java")
             java.srcDir(project(Modules.domain).file("src/test/java"))
         }
+
+        
     }
 }
 
