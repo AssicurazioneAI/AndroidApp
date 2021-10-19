@@ -35,6 +35,7 @@ object TestingDeps {
     val coroutine by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine}" }
     val coroutineCore by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}" }
     val mockk by lazy { "io.mockk:mockk:${Versions.mockk}" }
+    val mockkAndroid by lazy { "io.mockk:mockk-android:${Versions.mockk}" }
 }
 
 

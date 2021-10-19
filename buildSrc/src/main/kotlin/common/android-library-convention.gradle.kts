@@ -76,6 +76,7 @@ dependencies {
     androidTestImplementation(TestingDeps.junitRunner)
     androidTestImplementation(TestingDeps.espresso)
     androidTestImplementation(TestingDeps.truth)
+    androidTestImplementation(TestingDeps.mockkAndroid)
     androidTestImplementation(TestingDeps.coroutine)
 
 

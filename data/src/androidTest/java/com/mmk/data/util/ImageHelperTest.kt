@@ -8,6 +8,8 @@ import androidx.annotation.DrawableRes
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.mmk.data.R
+import io.mockk.every
+import io.mockk.mockk
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -18,7 +20,9 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class ImageHelperTest {
     private lateinit var imageHelper: ImageHelper
+    private lateinit var bitmapHelper: BitmapHelper
     private lateinit var context: Context
+
 
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
@@ -26,12 +30,22 @@ class ImageHelperTest {
     @Before
     fun setUp() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
-        imageHelper = ImageHelper(context, mainCoroutineRule.dispatcher)
+        bitmapHelper = mockk()
+        imageHelper = ImageHelper(context, bitmapHelper, mainCoroutineRule.dispatcher)
     }
 
     @Test
     fun getBase64String_returnsNull_whenImageIsNotFound() = mainCoroutineRule.runBlockingTest {
         val base64String = imageHelper.getBase64StringFromImagePath("NotCorrectImagePath")
+        assertThat(base64String).isNull()
+    }
+
+    @Test
+    fun getBase64String_returnsNull_whenGettingBitmapIsFailed() = mainCoroutineRule.runBlockingTest {
+        val imagePath = getImagePathFromResId(R.mipmap.ic_launcher)
+        every { bitmapHelper.resize(any()) } returns null
+        every { bitmapHelper.convertBitmapToBase64String(any()) } returns null
+        val base64String = imageHelper.getBase64StringFromImagePath(imagePath)
         assertThat(base64String).isNull()
     }
 

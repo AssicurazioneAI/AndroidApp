@@ -19,6 +19,7 @@ import kotlin.math.min
 
 class ImageHelper(
     private val context: Context,
+    private val bitmapHelper: BitmapHelper,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
@@ -27,8 +28,8 @@ class ImageHelper(
         val bitmap = context.getBitmapFromImagePath(imagePath)
         return bitmap?.let {
             withContext(dispatcher) {
-                val resizedBitmap = it.resize()
-                resizedBitmap.asBase64()
+                val resizedBitmap = bitmapHelper.resize(it)
+                bitmapHelper.convertBitmapToBase64String(resizedBitmap)
             }
         }
 
@@ -45,7 +46,6 @@ class ImageHelper(
                 null
             }
 
-
         } else {
             val source = ImageDecoder.createSource(contentResolver, imageUri)
             return try {
@@ -56,38 +56,5 @@ class ImageHelper(
             }
         }
 
-
     }
-
-
-    private fun Bitmap.resize(maxWidth: Int = 1000, maxHeight: Int = 1000): Bitmap {
-        val width = this.width
-        val height = this.height
-        val scaleHeight = maxHeight.toFloat() / width
-        val scaleWidth = maxWidth.toFloat() / height
-        val scale = min(scaleHeight, scaleWidth)
-
-        val matrix = Matrix()
-        matrix.postScale(scale, scale)
-        val resizedBitmap = Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
-        return resizedBitmap
-    }
-
-    private fun Bitmap?.asBase64(): String? {
-        return try {
-            val baos = ByteArrayOutputStream()
-            this?.compress(Bitmap.CompressFormat.JPEG, 70, baos)
-            val byteArray = baos.toByteArray()
-            val encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP)
-            baos.close()
-            val prefix = "data:image/jpeg;base64,"
-            "$prefix$encodedImage"
-
-        } catch (e: Exception) {
-            Timber.e(e)
-            e.toString()
-        }
-    }
-
-
 }
