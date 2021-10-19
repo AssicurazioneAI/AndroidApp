@@ -15,6 +15,7 @@ object Versions {
 
     //Testing Libraries Versions
     const val jUnit="4.12"
+    const val androidxCoreTesting="2.1.0"
     const val jUnitRunner="1.1.3"
     const val truth="1.1.3"
     const val espresso="3.4.0"

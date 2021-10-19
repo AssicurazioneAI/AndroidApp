@@ -85,6 +85,9 @@ dependencies {
 
 
     testImplementation(TestingDeps.junit)
+    testImplementation(TestingDeps.mockk)
+    testImplementation(TestingDeps.truth)
+    testImplementation(TestingDeps.androidXCore)
     androidTestImplementation(TestingDeps.junitRunner)
     androidTestImplementation(TestingDeps.espresso)
 }

@@ -28,6 +28,7 @@ object Deps {
 object TestingDeps {
     val junit by lazy { "junit:junit:${Versions.jUnit}" }
     val junitRunner by lazy { "androidx.test.ext:junit:${Versions.jUnitRunner}" }
+    val androidXCore by lazy { "androidx.arch.core:core-testing:${Versions.androidxCoreTesting}" }
     val truth by lazy { "com.google.truth:truth:${Versions.jUnitRunner}" }
     val espresso by lazy { "androidx.test.espresso:espresso-core:${Versions.espresso}" }
     val koinCore by lazy { "io.insert-koin:koin-test:${Versions.koin}" }

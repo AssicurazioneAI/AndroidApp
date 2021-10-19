@@ -34,7 +34,7 @@ class SendingImageUseCaseTest {
     }
 
     @Test
-    fun `sending image should return error when sending null image`() =
+    fun `sending image should return EmptyData Error when sending null image`() =
         mainCoroutineRule.runBlockingTest {
             val image: String? = null
             val response: Result<Unit> = sendingImageUseCase(image)
@@ -44,7 +44,7 @@ class SendingImageUseCaseTest {
         }
 
     @Test
-    fun `sending image should return error when sending empty image`() =
+    fun `sending image should return EmptyData error when sending empty image`() =
         mainCoroutineRule.runBlockingTest {
             val image: String = ""
             val response: Result<Unit> = sendingImageUseCase(image)
@@ -53,7 +53,7 @@ class SendingImageUseCaseTest {
         }
 
     @Test
-    fun `sending image should not send anything when it is empty or null`() =
+    fun `sending image should not call server function when it is empty or null`() =
         mainCoroutineRule.runBlockingTest {
             val image = null
             val response: Result<Unit> = sendingImageUseCase(image)
@@ -71,7 +71,7 @@ class SendingImageUseCaseTest {
         }
 
     @Test
-    fun `sending image should return fail when sending image is failed`() =
+    fun `sending image should return ApiError when sending image is failed`() =
         mainCoroutineRule.runBlockingTest {
             val image: String = "imagePath"
             val errorMessage = "Error occurred while sending an image"
