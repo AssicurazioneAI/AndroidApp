@@ -1,5 +1,8 @@
 package com.mmk.assicurazioneai.utils
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.
@@ -24,4 +27,14 @@ open class SingleEvent<out T>(private val content: T) {
      * Returns the content, even if it's already been handled.
      */
     fun peekContent(): T = content
+}
+
+
+inline fun <T> LiveData<SingleEvent<T>>.observeSingleEvent(
+    owner: LifecycleOwner,
+    crossinline onEventUnhandledContent: (T) -> Unit
+) {
+    observe(owner) {
+        it?.getContentIfNotHandled()?.let(onEventUnhandledContent)
+    }
 }

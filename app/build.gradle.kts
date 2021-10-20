@@ -51,6 +51,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -88,6 +89,7 @@ dependencies {
     testImplementation(TestingDeps.mockk)
     testImplementation(TestingDeps.truth)
     testImplementation(TestingDeps.androidXCore)
+    testImplementation(TestingDeps.coroutine)
     androidTestImplementation(TestingDeps.junitRunner)
     androidTestImplementation(TestingDeps.espresso)
 }

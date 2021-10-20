@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AssicurazioneAI</string>
+    <string name="error_unknown_error_occured">Unknown error occured</string>
+    <string name="error_server_problem">Error occurred while connecting to the server</string>
+    <string name="error_empty_data">Not Found</string>
+    <string name="error_no_internet_connection">Please, check your internet connection</string>
+    <string name="error_image_wrong_format">File format is not supported</string>
 </resources>

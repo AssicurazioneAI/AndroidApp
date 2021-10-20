@@ -16,8 +16,9 @@ import org.junit.Test
 class SendingImageUseCaseTest {
 
     /**
-     * 1)Image should not be empty, when it is empty or null should return error
+     * 1)Image should not be empty, when it is empty or null should return EmptyOrNull Error
      * 2)When sending image it should return given response (fail when it is failed, or success)
+     * 3)When sending image, if it fails from server it should return ApiError with message
      */
 
     private lateinit var sendingImageUseCase: SendingImageUseCase
