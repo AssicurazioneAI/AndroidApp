@@ -3,6 +3,7 @@ plugins {
     id("com.google.gms.google-services")
     kotlin("android")
     kotlin("kapt")
+    id("kotlin-android")
 
 }
 
@@ -77,8 +78,10 @@ dependencies {
     implementation(Deps.timber)
     implementation(Deps.viewModel)
     implementation(Deps.liveData)
+    implementation(Deps.lifeCycleCommon)
     implementation(platform(Deps.firebaseBom))
     implementation(platform(Deps.firebaseAnalytics))
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     implementCoroutine()
     implementNavigationComponent()
@@ -90,6 +93,11 @@ dependencies {
     testImplementation(TestingDeps.truth)
     testImplementation(TestingDeps.androidXCore)
     testImplementation(TestingDeps.coroutine)
+
     androidTestImplementation(TestingDeps.junitRunner)
+    androidTestImplementation(TestingDeps.truth)
+    androidTestImplementation(TestingDeps.mockkAndroid)
+    androidTestImplementation(TestingDeps.androidXRules)
     androidTestImplementation(TestingDeps.espresso)
+    androidTestImplementation(TestingDeps.navigation)
 }

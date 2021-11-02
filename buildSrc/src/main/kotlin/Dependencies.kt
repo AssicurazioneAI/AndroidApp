@@ -20,8 +20,12 @@ object Deps {
     val navigationUiComponent by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleExtension}" }
     val liveData by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleExtension}" }
+    //For DefaultLifeCyleObserver
+    val lifeCycleCommon by lazy { "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycleExtension}" }
+
     val firebaseBom by lazy { "com.google.firebase:firebase-bom:${Versions.firebaseBom}" }
     val firebaseAnalytics by lazy { "com.google.firebase:firebase-analytics-ktx" }
+
 
 }
 
@@ -29,6 +33,7 @@ object TestingDeps {
     val junit by lazy { "junit:junit:${Versions.jUnit}" }
     val junitRunner by lazy { "androidx.test.ext:junit:${Versions.jUnitRunner}" }
     val androidXCore by lazy { "androidx.arch.core:core-testing:${Versions.androidxCoreTesting}" }
+    val androidXRules by lazy { "androidx.test:rules:${Versions.androidXRules}" }
     val truth by lazy { "com.google.truth:truth:${Versions.jUnitRunner}" }
     val espresso by lazy { "androidx.test.espresso:espresso-core:${Versions.espresso}" }
     val koinCore by lazy { "io.insert-koin:koin-test:${Versions.koin}" }
@@ -37,6 +42,7 @@ object TestingDeps {
     val coroutineCore by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}" }
     val mockk by lazy { "io.mockk:mockk:${Versions.mockk}" }
     val mockkAndroid by lazy { "io.mockk:mockk-android:${Versions.mockk}" }
+    val navigation by lazy { "androidx.navigation:navigation-testing:${Versions.navigation}" }
 }
 
 

@@ -1,5 +1,7 @@
 package com.mmk.domain.model.error
 
+import kotlin.math.E
+
 sealed class ErrorEntity {
 
     sealed class CommonError : ErrorEntity() {
@@ -17,4 +19,8 @@ sealed class ErrorEntity {
     sealed class ImageError :ErrorEntity(){
         object WrongFormat : ImageError()
     }
+
 }
+
+
+
