@@ -1,3 +1,7 @@
+## 1.0.7
+
+- Fixing App Distribution workflow
+
 ## 1.0.6
 
 - Implementing Camera Functionality

@@ -36,7 +36,7 @@ jobs:
 
   assemble_distribute_job:
     needs: [ test_job ]
-    name: Generate release apk and Upload to Firebase
+    name: Generate debug apk and Upload to Firebase
     runs-on: ubuntu-latest
     steps:
 
@@ -52,16 +52,16 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Building Release apk
+      - name: Building Debug apk
         env:
           VERSION_CODE: ${{ github.run_id }}
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleDebug
 
       - name: Saving APK to artifacts
         uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: app/build/outputs/apk/release/**.apk
+          path: app/build/outputs/apk/debug/**.apk
 
       - name: Get the release version
         id: get_version
@@ -78,7 +78,7 @@ jobs:
           tag_name: ${{ github.ref }}
           name: Release ${{ steps.get_version.outputs.VERSION }}
           body_path: CHANGELOG.md
-          files: app/build/outputs/apk/release/app-release-unsigned.apk
+          files: app/build/outputs/apk/debug/app-debug.apk
           draft: false
           prerelease: false
 
@@ -88,5 +88,5 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: development-team
-          file: app/build/outputs/apk/release/app-release-unsigned.apk
+          file: app/build/outputs/apk/debug/app-debug.apk
           releaseNotesFile: CHANGELOG.md
