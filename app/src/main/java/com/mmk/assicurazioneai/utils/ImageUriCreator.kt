@@ -10,9 +10,9 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ImageUtil(private val context: Context?) {
+class ImageUriCreator(private val context: Context?) {
 
-    fun getNewImageUri(): Uri? {
+    fun createAndGetNewImageUri(): Uri? {
         val imageFile = createNewImageFile()
         return getImageUriFromFile(imageFile)
     }

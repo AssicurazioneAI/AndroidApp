@@ -9,7 +9,7 @@ import androidx.test.annotation.UiThreadTest
 import com.google.common.truth.Truth.assertThat
 import com.mmk.assicurazioneai.util.FakeActivityResultRegistry
 import com.mmk.assicurazioneai.util.getOrAwaitValu
-import com.mmk.assicurazioneai.utils.ImageUtil
+import com.mmk.assicurazioneai.utils.ImageUriCreator
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -23,7 +23,7 @@ class CameraCaptureTest {
     private lateinit var registry: FakeActivityResultRegistry<Uri>
     private lateinit var lifeCycle: LifecycleRegistry
     private lateinit var cameraCapture: CameraCapture
-    private lateinit var imageUtil: ImageUtil
+    private lateinit var imageUriCreator: ImageUriCreator
 
 
     @UiThreadTest
@@ -33,8 +33,8 @@ class CameraCaptureTest {
         lifeCycle = LifecycleRegistry(lifeCycleOwner)
         every { lifeCycleOwner.lifecycle } returns lifeCycle
         registry = FakeActivityResultRegistry()
-        imageUtil = mockk()
-        cameraCapture = CameraCapture(registry, imageUtil)
+        imageUriCreator = mockk()
+        cameraCapture = CameraCapture(registry, imageUriCreator)
         lifeCycle.addObserver(cameraCapture)
         lifeCycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
 
@@ -45,7 +45,7 @@ class CameraCaptureTest {
     fun verify_imageIsCaptured_whenEverythingIsOkay() {
         lifeCycle.currentState = Lifecycle.State.STARTED
         val expectedResult = Uri.parse("imagePath")
-        every { imageUtil.getNewImageUri() } returns expectedResult
+        every { imageUriCreator.createAndGetNewImageUri() } returns expectedResult
         registry.expectedResult = expectedResult
         registry.isResultFailed = false
 
@@ -60,7 +60,7 @@ class CameraCaptureTest {
     fun verify_imageIsNotCaptured_whenImageIsCancelled() {
         lifeCycle.currentState = Lifecycle.State.STARTED
         val expectedResult = Uri.parse("imagePath")
-        every { imageUtil.getNewImageUri() } returns expectedResult
+        every { imageUriCreator.createAndGetNewImageUri() } returns expectedResult
 
         registry.expectedResult = expectedResult
         registry.isResultFailed = true
@@ -75,7 +75,7 @@ class CameraCaptureTest {
     fun verify_imageIsNotCaptured_whenImageUriIsNull() {
         lifeCycle.currentState = Lifecycle.State.STARTED
         val expectedResult = null
-        every { imageUtil.getNewImageUri() } returns expectedResult
+        every { imageUriCreator.createAndGetNewImageUri() } returns expectedResult
 
         registry.expectedResult = expectedResult
         registry.isResultFailed = false

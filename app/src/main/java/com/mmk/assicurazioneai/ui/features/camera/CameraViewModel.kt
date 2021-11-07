@@ -1,5 +1,6 @@
 package com.mmk.assicurazioneai.ui.features.camera
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mmk.assicurazioneai.R
@@ -17,11 +18,15 @@ class CameraViewModel(private val sendingImageUseCase: SendingImageUseCase) : Ba
     private var _sendingImageUiState: MutableLiveData<UiState> = MutableLiveData()
     val sendingImageUiState: LiveData<UiState> = _sendingImageUiState
 
-    private var _onImageSent: MutableLiveData<SingleEvent<Unit>> = MutableLiveData()
+    private val _onImageSent: MutableLiveData<SingleEvent<Unit>> = MutableLiveData()
     val onImageSent: LiveData<SingleEvent<Unit>> = _onImageSent
 
+    private val _imagePath = MutableLiveData<String?>()
+    val imagePath: LiveData<String?> = _imagePath
 
-    fun sendImage(imagePath: String?) = executeUseCase(_sendingImageUiState) {
+
+    fun sendImage() = executeUseCase(_sendingImageUiState) {
+        val imagePath: String? = _imagePath.value
         val response = sendingImageUseCase(imagePath)
         response.onSuccess {
             _onImageSent.value = SingleEvent(Unit)
@@ -30,6 +35,12 @@ class CameraViewModel(private val sendingImageUseCase: SendingImageUseCase) : Ba
                 ErrorEntity.ImageError.WrongFormat -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_image_wrong_format))
                 else -> handleOtherErrorCases(it)
             }
+        }
+    }
+
+    fun setImagePath(imageUri: Uri?) {
+        imageUri?.let {
+            _imagePath.value = it.toString()
         }
     }
 }

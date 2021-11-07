@@ -1,56 +1,69 @@
 package com.mmk.assicurazioneai.ui.features.camera
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
-import com.mmk.assicurazioneai.BuildConfig
+import androidx.viewbinding.ViewBinding
 import com.mmk.assicurazioneai.R
-import com.mmk.assicurazioneai.utils.ImageUtil
+import com.mmk.assicurazioneai.databinding.FragmentCameraBinding
+import com.mmk.assicurazioneai.ui.base.BaseFragment
+import com.mmk.assicurazioneai.utils.ImageUriCreator
+import com.mmk.assicurazioneai.utils.binding.viewBinding
 import com.mmk.assicurazioneai.utils.extensions.toast
-import timber.log.Timber
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.math.log
+import com.mmk.assicurazioneai.utils.observeSingleEvent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class CameraFragment : Fragment(R.layout.fragment_camera) {
+class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
+    private val viewModel: CameraViewModel by viewModel()
     private lateinit var cameraCapture: CameraCapture
+    override val binding: FragmentCameraBinding by viewBinding(FragmentCameraBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cameraCapture =
-            CameraCapture(requireActivity().activityResultRegistry, ImageUtil(requireContext()))
+            CameraCapture(
+                requireActivity().activityResultRegistry,
+                ImageUriCreator(requireContext())
+            )
 
         lifecycle.addObserver(cameraCapture)
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun initView() {
+        super.initView()
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         cameraCapture.captureImage()
+    }
 
-        cameraCapture.capturedImageUri.observe(viewLifecycleOwner){
+    override fun observeValues() {
+        super.observeValues()
+        cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
             it?.let {
-                context.toast(it.toString())
+                viewModel.setImagePath(it)
             }
-
         }
 
+        viewModel.imagePath.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.imageView.setImageURI(Uri.parse(it))
+            }
+        }
+
+        viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
+            context.toast("Image is sent successfully")
+        }
+    }
+
+    override fun setClicks() {
+        super.setClicks()
+        binding.sendImageButton.setOnClickListener {
+            viewModel.sendImage()
+        }
     }
 
 
