@@ -1,6 +1,7 @@
-package com.mmk.domain.repository
+package com.mmk.data.repository
 
 import com.mmk.domain.model.Result
+import com.mmk.domain.model.error.ErrorEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,7 +14,7 @@ abstract class BaseRepository(private val dispatcher: CoroutineDispatcher = Disp
         try {
             func.invoke()
         } catch (e: Exception) {
-            Result.Error(e.message)
+            Result.Error(ErrorEntity.CommonError.Unknown)
         }
     }
 }

@@ -3,6 +3,7 @@ plugins {
     id("com.google.gms.google-services")
     kotlin("android")
     kotlin("kapt")
+    id("kotlin-android")
 
 }
 
@@ -19,6 +20,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    //Animations are disabled for testing purposes
+    testOptions {
+        animationsDisabled = true
+    }
+
+    packagingOptions {
+        with(resources.excludes) {
+            add("META-INF/DEPENDENCIES")
+            add("META-INF/LICENSE")
+            add("META-INF/LICENSE.txt")
+            add("META-INF/license.txt")
+            add("META-INF/NOTICE")
+            add("META-INF/notice.txt")
+            add("META-INF/NOTICE")
+            add("META-INF/NOTICE.txt")
+            add("META-INF/LGPL2.1")
+            add("META-INF/ASL2.0")
+            add("META-INF/AL2.0")
+            add("META-INF/*.kotlin_module")
+        }
+    }
+
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -28,6 +52,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -53,8 +78,10 @@ dependencies {
     implementation(Deps.timber)
     implementation(Deps.viewModel)
     implementation(Deps.liveData)
+    implementation(Deps.lifeCycleCommon)
     implementation(platform(Deps.firebaseBom))
     implementation(platform(Deps.firebaseAnalytics))
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     implementCoroutine()
     implementNavigationComponent()
@@ -62,6 +89,15 @@ dependencies {
 
 
     testImplementation(TestingDeps.junit)
+    testImplementation(TestingDeps.mockk)
+    testImplementation(TestingDeps.truth)
+    testImplementation(TestingDeps.androidXCore)
+    testImplementation(TestingDeps.coroutine)
+
     androidTestImplementation(TestingDeps.junitRunner)
+    androidTestImplementation(TestingDeps.truth)
+    androidTestImplementation(TestingDeps.mockkAndroid)
+    androidTestImplementation(TestingDeps.androidXRules)
     androidTestImplementation(TestingDeps.espresso)
+    androidTestImplementation(TestingDeps.navigation)
 }

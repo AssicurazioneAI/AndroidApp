@@ -15,7 +15,9 @@ dependencies {
     implementation(Deps.coroutineCore)
 
     testImplementation(TestingDeps.coroutine)
+    testImplementation(TestingDeps.coroutineCore)
     testImplementation(TestingDeps.junit)
     testImplementation(TestingDeps.truth)
+    testImplementation(TestingDeps.mockk)
 
 }
