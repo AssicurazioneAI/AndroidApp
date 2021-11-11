@@ -8,8 +8,10 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 
 fun Context?.toast(text: CharSequence?, duration: Int = Toast.LENGTH_SHORT) {
     this?.let {
@@ -41,6 +43,13 @@ fun Activity.setTranslucentStatusBar() {
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
             WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
         )
+    }
+}
+
+fun Fragment.showKeyboard(view: View) {
+    context?.let {
+        val imm = it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 }
 

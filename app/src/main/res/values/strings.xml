@@ -15,4 +15,7 @@
     <string name="mobile_number_hint">Phone number</string>
     <string name="txt_btn_continue">Continue</string>
     <string name="msg_accepting_terms_and_conditions">By continuing, I accept the Terms of condition, User agreements, and Privacy Policy</string>
+    <string name="verify_phone_title">Verify Your Phone Number</string>
+    <string name="msg_verification_code_sent_phone">Enter the code  we\'ve sent to your phone number that is +36 1 234 5678</string>
+    <string name="txt_btn_resend_code">Resend Code</string>
 </resources>

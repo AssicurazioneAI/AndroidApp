@@ -20,11 +20,15 @@ object Deps {
     val navigationUiComponent by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleExtension}" }
     val liveData by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleExtension}" }
+
     //For DefaultLifeCyleObserver
     val lifeCycleCommon by lazy { "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycleExtension}" }
 
     val firebaseBom by lazy { "com.google.firebase:firebase-bom:${Versions.firebaseBom}" }
     val firebaseAnalytics by lazy { "com.google.firebase:firebase-analytics-ktx" }
+
+    //PinView for OTP
+    val otpPinView by lazy { "com.chaos.view:pinview:${Versions.optPinView}" }
 
 
 }

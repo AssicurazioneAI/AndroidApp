@@ -82,6 +82,8 @@ dependencies {
     implementation(platform(Deps.firebaseBom))
     implementation(platform(Deps.firebaseAnalytics))
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation(Deps.otpPinView)
+
 
     implementCoroutine()
     implementNavigationComponent()
