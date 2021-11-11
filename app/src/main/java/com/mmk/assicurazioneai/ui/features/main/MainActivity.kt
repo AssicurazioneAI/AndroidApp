@@ -1,12 +1,19 @@
 package com.mmk.assicurazioneai.ui.features.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mmk.assicurazioneai.R
+import androidx.appcompat.app.AppCompatActivity
+import com.mmk.assicurazioneai.databinding.ActivityMainBinding
+import com.mmk.assicurazioneai.utils.extensions.setTranslucentStatusBar
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.rootView)
+        setTranslucentStatusBar()
     }
+
+
 }
