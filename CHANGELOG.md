@@ -1,3 +1,9 @@
+## 1.0.8
+
+- Implementing UI to the application (without functionalities) (Splash, Login, 
+  Otp VerificationCode,Camera Screen) 
+
+
 ## 1.0.7
 
 - Fixing App Distribution workflow
