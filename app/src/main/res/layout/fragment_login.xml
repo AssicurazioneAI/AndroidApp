@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <ImageView
+        android:id="@+id/bgImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="250dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_image"
+        android:transitionName="mainBgView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/gradientBg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/bg_white_gradient"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/centerGuideLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.60" />
+
+
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="-40dp"
+                android:alpha="0"
+                android:transitionName="logo"
+                android:scaleType="centerCrop"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:src="@drawable/ic_logo"
+                app:layout_constraintBottom_toTopOf="@id/titleWelcome"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/titleWelcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="48dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:transitionName="title"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/login_welcome"
+                android:textColor="#DE000000"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@id/subTitle"
+                app:layout_constraintEnd_toEndOf="@id/phoneInputLayout"
+                app:layout_constraintStart_toStartOf="@id/phoneInputLayout" />
+
+            <TextView
+                android:id="@+id/subTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:transitionName="subTitle"
+                android:text="@string/msg_start_verify_number"
+                android:textColor="#DE000000"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/phoneInputLayout"
+                app:layout_constraintEnd_toEndOf="@id/titleWelcome"
+                app:layout_constraintStart_toStartOf="@id/titleWelcome" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:hint="@string/mobile_number_hint"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:layout_constraintBottom_toTopOf="@id/verifyButtonBarrier"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="@string/hint_phone_number_example"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:minHeight="56dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColor="#DE000000"
+                    android:textColorHint="#61000000"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/verifyButtonBarrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="top"
+                app:constraint_referenced_ids="verifyButton,progressBar" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/verifyButton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:elevation="4dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="56dp"
+                android:text="@string/txt_btn_continue"
+                app:cornerRadius="12dp"
+                app:layout_constraintBottom_toTopOf="@id/verifyCodeDescription"
+                app:layout_constraintEnd_toEndOf="@id/phoneInputLayout"
+                app:layout_constraintStart_toStartOf="@id/phoneInputLayout" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="24dp"
+                android:elevation="4dp"
+                android:visibility="gone"
+                android:indeterminateTint="?attr/colorPrimary"
+                app:layout_constraintBottom_toTopOf="@id/verifyCodeDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/verifyCodeDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:paddingBottom="24dp"
+                android:text="@string/msg_accepting_terms_and_conditions"
+                android:textColor="#61000000"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/phoneInputLayout"
+                app:layout_constraintStart_toStartOf="@id/phoneInputLayout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1"
+
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</FrameLayout>

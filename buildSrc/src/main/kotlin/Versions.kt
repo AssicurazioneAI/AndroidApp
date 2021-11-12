@@ -12,6 +12,7 @@ object Versions {
     const val navigation="2.3.5"
     const val lifecycleExtension="2.3.1"
     const val firebaseBom="28.4.2"
+    const val optPinView="1.4.4"
 
     //Testing Libraries Versions
     const val jUnit="4.12"
