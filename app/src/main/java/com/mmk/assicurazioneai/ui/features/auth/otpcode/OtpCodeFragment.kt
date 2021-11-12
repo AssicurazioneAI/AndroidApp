@@ -3,6 +3,7 @@ package com.mmk.assicurazioneai.ui.features.auth.otpcode
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import az.reseptron.patient.util.KeyboardEventListener
 import com.mmk.assicurazioneai.R
@@ -28,8 +29,11 @@ class OtpCodeFragment : Fragment(R.layout.fragment_otpcode) {
         binding.codePinView.requestFocus()
         showKeyboard(binding.codePinView)
 
-    }
+        binding.resendButton.setOnClickListener {
+            findNavController().navigate(R.id.action_otpCodeFragment_to_cameraFragment)
+        }
 
+    }
 
 
 }

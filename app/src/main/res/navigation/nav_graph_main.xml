@@ -36,5 +36,9 @@
         android:id="@+id/otpCodeFragment"
         tools:layout="@layout/fragment_otpcode"
         android:name="com.mmk.assicurazioneai.ui.features.auth.otpcode.OtpCodeFragment"
-        android:label="OtpCodeFragment" />
+        android:label="OtpCodeFragment" >
+        <action
+            android:id="@+id/action_otpCodeFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
 </navigation>
