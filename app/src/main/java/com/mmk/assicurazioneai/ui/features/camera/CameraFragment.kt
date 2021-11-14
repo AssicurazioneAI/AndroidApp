@@ -18,18 +18,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
     private val viewModel: CameraViewModel by viewModel()
-    private lateinit var cameraCapture: CameraCapture
+//    private lateinit var cameraCapture: CameraCapture
     override val binding: FragmentCameraBinding by viewBinding(FragmentCameraBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraCapture =
-            CameraCapture(
-                requireActivity().activityResultRegistry,
-                ImageUriCreator(requireContext())
-            )
-
-        lifecycle.addObserver(cameraCapture)
+//        cameraCapture =
+//            CameraCapture(
+//                requireActivity().activityResultRegistry,
+//                ImageUriCreator(requireContext())
+//            )
+//
+//        lifecycle.addObserver(cameraCapture)
 
     }
 
@@ -37,16 +37,16 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         super.initView()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        cameraCapture.captureImage()
+//        cameraCapture.captureImage()
     }
 
     override fun observeValues() {
         super.observeValues()
-        cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
-            it?.let {
-                viewModel.setImagePath(it)
-            }
-        }
+//        cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
+//            it?.let {
+//                viewModel.setImagePath(it)
+//            }
+//        }
 
         viewModel.imagePath.observe(viewLifecycleOwner) {
             it?.let {

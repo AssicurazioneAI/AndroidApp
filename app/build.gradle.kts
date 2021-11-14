@@ -93,7 +93,7 @@ dependencies {
     testImplementation(TestingDeps.junit)
     testImplementation(TestingDeps.mockk)
     testImplementation(TestingDeps.truth)
-    testImplementation(TestingDeps.androidXCore)
+    testImplementation(TestingDeps.androidXArchCore)
     testImplementation(TestingDeps.coroutine)
 
     androidTestImplementation(TestingDeps.junitRunner)
@@ -102,4 +102,6 @@ dependencies {
     androidTestImplementation(TestingDeps.androidXRules)
     androidTestImplementation(TestingDeps.espresso)
     androidTestImplementation(TestingDeps.navigation)
+    androidTestImplementation(TestingDeps.androidXCore)
+    androidTestImplementation(TestingDeps.fragment)
 }

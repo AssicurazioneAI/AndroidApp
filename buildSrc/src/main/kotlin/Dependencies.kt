@@ -1,5 +1,3 @@
-import org.gradle.api.artifacts.dsl.DependencyHandler
-
 object BuildPlugins {
     val android by lazy { "com.android.tools.build:gradle:${Versions.gradlePlugin}" }
     val kotlin by lazy { "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}" }
@@ -36,7 +34,8 @@ object Deps {
 object TestingDeps {
     val junit by lazy { "junit:junit:${Versions.jUnit}" }
     val junitRunner by lazy { "androidx.test.ext:junit:${Versions.jUnitRunner}" }
-    val androidXCore by lazy { "androidx.arch.core:core-testing:${Versions.androidxCoreTesting}" }
+    val androidXCore by lazy { "androidx.test:core:${Versions.androidXCoreTesting}" }
+    val androidXArchCore by lazy { "androidx.arch.core:core-testing:${Versions.androidxArchCoreTesting}" }
     val androidXRules by lazy { "androidx.test:rules:${Versions.androidXRules}" }
     val truth by lazy { "com.google.truth:truth:${Versions.jUnitRunner}" }
     val espresso by lazy { "androidx.test.espresso:espresso-core:${Versions.espresso}" }
@@ -47,6 +46,8 @@ object TestingDeps {
     val mockk by lazy { "io.mockk:mockk:${Versions.mockk}" }
     val mockkAndroid by lazy { "io.mockk:mockk-android:${Versions.mockk}" }
     val navigation by lazy { "androidx.navigation:navigation-testing:${Versions.navigation}" }
+    val fragment by lazy { "androidx.fragment:fragment-testing:${Versions.fragment}" }
+
 }
 
 
