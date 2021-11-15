@@ -1,11 +1,17 @@
 package com.mmk.assicurazioneai.ui.features.camera
 
+
+import androidx.navigation.fragment.findNavController
+
+
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
@@ -27,6 +33,24 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
     //    private lateinit var cameraCapture: CameraCapture
     override val binding: FragmentCameraBinding by viewBinding(FragmentCameraBinding::inflate)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (viewModel.imagePath.value.isNullOrEmpty()) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    } else {
+                        viewModel.resetImagePath()
+                        askCameraPermission()
+                    }
+                }
+            })
+
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -52,7 +76,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         super.observeValues()
         cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
             it?.let {
-                context.toast("YEhuu: $it")
+                context.toast("$it")
                 viewModel.setImagePath(it)
             }
         }
@@ -66,6 +90,10 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
             context.toast("Image is sent successfully")
         }
+
+        viewModel.isFlashOn.observe(viewLifecycleOwner){
+            cameraCapture.setFlashEnabled(it)
+        }
     }
 
     override fun setClicks() {
@@ -77,9 +105,6 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
             cameraCapture.captureImage(requireContext(), binding.root)
         }
 
-        binding.flashImageButton.setOnClickListener {
-            cameraCapture.setFlashEnabled(true)
-        }
     }
 
     private fun askCameraPermission() {
@@ -99,6 +124,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
             viewLifecycleOwner,
             binding.cameraView.surfaceProvider
         )
+
     }
 
 

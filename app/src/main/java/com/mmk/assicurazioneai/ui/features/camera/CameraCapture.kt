@@ -32,7 +32,7 @@ class CameraCapture(
     private var mImageCapture: ImageCapture? = null
     private val mediaActionSound = MediaActionSound()
     private val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-    private var isFlashEnabled = true
+    private var isFlashEnabled = false
 
 
     private var _capturedImageUri = MutableLiveData<Uri?>()
@@ -47,10 +47,14 @@ class CameraCapture(
         val newImageFile = imageUriCreator.createNewImageFile()
         newImageFile?.let { photoFile ->
             val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+            mediaActionSound.play(MediaActionSound.SHUTTER_CLICK)
+            flashImage(containerView)
             mImageCapture!!.takePicture(outputOptions, ContextCompat.getMainExecutor(context),
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        ProcessCameraProvider.getInstance(context).get().unbindAll()
                         _capturedImageUri.value = imageUriCreator.getImageUriFromFile(photoFile)
+
 
                     }
 
@@ -59,10 +63,10 @@ class CameraCapture(
                     }
 
                 })
-            mediaActionSound.play(MediaActionSound.SHUTTER_CLICK)
-            flashImage(containerView)
+
 
         }
+
 
     }
 
@@ -119,7 +123,7 @@ class CameraCapture(
          **/
         mImageCapture = ImageCapture.Builder()
             .setFlashMode(if (isFlashEnabled) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF)
-            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .build()
 
     }
@@ -133,7 +137,7 @@ class CameraCapture(
             container.postDelayed(
                 { container.foreground = null }, 50L
             )
-        }, 100L)
+        }, 50L)
     }
 
 

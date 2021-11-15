@@ -24,6 +24,11 @@ class CameraViewModel(private val sendingImageUseCase: SendingImageUseCase) : Ba
     private val _imagePath = MutableLiveData<String?>()
     val imagePath: LiveData<String?> = _imagePath
 
+    val isFlashOn = MutableLiveData<Boolean>(false)
+
+    fun changeFlashMode() {
+        isFlashOn.value = isFlashOn.value?.not()
+    }
 
     fun sendImage() = executeUseCase(_sendingImageUiState) {
         val imagePath: String? = _imagePath.value
@@ -42,5 +47,9 @@ class CameraViewModel(private val sendingImageUseCase: SendingImageUseCase) : Ba
         imageUri?.let {
             _imagePath.value = it.toString()
         }
+    }
+
+    fun resetImagePath() {
+        _imagePath.value = null
     }
 }
