@@ -28,6 +28,11 @@ object Deps {
     //PinView for OTP
     val otpPinView by lazy { "com.chaos.view:pinview:${Versions.optPinView}" }
 
+    //CameraX libs
+    val cameraXCore by lazy { "androidx.camera:camera-camera2:${Versions.cameraX}" }
+    val cameraXLifeCycle by lazy { "androidx.camera:camera-lifecycle:${Versions.cameraX}" }
+    val cameraXView by lazy { "androidx.camera:camera-view:${Versions.cameraXView}" }
+
 
 }
 

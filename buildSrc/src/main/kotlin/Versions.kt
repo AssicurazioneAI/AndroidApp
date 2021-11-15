@@ -13,6 +13,8 @@ object Versions {
     const val lifecycleExtension="2.3.1"
     const val firebaseBom="28.4.2"
     const val optPinView="1.4.4"
+    const val cameraX="1.0.2"
+    const val cameraXView="1.0.0-alpha30"
 
     //Testing Libraries Versions
     const val jUnit="4.12"

@@ -17,7 +17,7 @@ class ImageUriCreator(private val context: Context?) {
         return getImageUriFromFile(imageFile)
     }
 
-    private fun createNewImageFile(): File? = context?.let {
+    fun createNewImageFile(): File? = context?.let {
         // Create an image file name
         val timeStamp: String =
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -35,7 +35,7 @@ class ImageUriCreator(private val context: Context?) {
     }
 
 
-    private fun getImageUriFromFile(imageFile: File?): Uri? = imageFile?.let {
+    fun getImageUriFromFile(imageFile: File?): Uri? = imageFile?.let {
         FileProvider.getUriForFile(
             context!!,
             "${BuildConfig.APPLICATION_ID}.android.fileprovider",

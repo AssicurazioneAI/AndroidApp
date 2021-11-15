@@ -1,54 +1,140 @@
 package com.mmk.assicurazioneai.ui.features.camera
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.media.MediaActionSound
 import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.*
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.lifecycle.*
 import com.mmk.assicurazioneai.utils.ImageUriCreator
+import com.mmk.assicurazioneai.utils.extensions.toast
+import timber.log.Timber
+import java.io.File
 
 class CameraCapture(
-    private val registry: ActivityResultRegistry,
     private val imageUriCreator: ImageUriCreator
-) : DefaultLifecycleObserver {
+) {
 
 
-    private lateinit var cameraIntentResultLauncher: ActivityResultLauncher<Intent>
+    private var mPreview: Preview? = null
+    private var mImageCapture: ImageCapture? = null
+    private val mediaActionSound = MediaActionSound()
+    private val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    private var isFlashEnabled = true
+
 
     private var _capturedImageUri = MutableLiveData<Uri?>()
     val capturedImageUri: LiveData<Uri?> = _capturedImageUri
 
-    private var imageUri: Uri? = null
 
+    fun captureImage(context: Context?, containerView: View? = null) {
+        if (mImageCapture == null || context == null) return
+        mImageCapture!!.flashMode =
+            if (isFlashEnabled) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF
 
-    override fun onCreate(owner: LifecycleOwner) {
-        super.onCreate(owner)
-        cameraIntentResultLauncher = registry.register(
-            "key",
-            owner,
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == RESULT_OK)
-                _capturedImageUri.value = imageUri
+        val newImageFile = imageUriCreator.createNewImageFile()
+        newImageFile?.let { photoFile ->
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+            mImageCapture!!.takePicture(outputOptions, ContextCompat.getMainExecutor(context),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        _capturedImageUri.value = imageUriCreator.getImageUriFromFile(photoFile)
+
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        Timber.e("ImageCapture Exception: $exception")
+                    }
+
+                })
+            mediaActionSound.play(MediaActionSound.SHUTTER_CLICK)
+            flashImage(containerView)
+
         }
+
     }
 
-    fun captureImage() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val newImageUri = imageUriCreator.createAndGetNewImageUri()
-        newImageUri?.let {
-            imageUri = it
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, it)
-            cameraIntentResultLauncher.launch(takePictureIntent)
+
+    fun start(
+        context: Context?,
+        lifecycleOwner: LifecycleOwner,
+        surfaceProvider: Preview.SurfaceProvider
+    ) {
+        context?.let {
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(it)
+            cameraProviderFuture.addListener({
+                try {
+                    // Used to bind the lifecycle of cameras to the lifecycle owner
+                    val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+                    initialize(surfaceProvider)
+                    // Unbind use cases before rebinding
+                    cameraProvider.unbindAll()
+
+                    // Bind use cases to camera
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        cameraSelector,
+                        mPreview,
+                        mImageCapture
+                    )
+
+
+                } catch (exc: Exception) {
+                    Timber.e("Use case binding failed $exc")
+                }
+
+            }, ContextCompat.getMainExecutor(it))
+
         }
+
+
     }
 
-    override fun onDestroy(owner: LifecycleOwner) {
-        cameraIntentResultLauncher.unregister()
-        super.onDestroy(owner)
+    fun setFlashEnabled(isEnabled: Boolean) {
+        isFlashEnabled = isEnabled
     }
+
+    private fun initialize(surfaceProvider: Preview.SurfaceProvider) {
+        /**
+         * Initialize Camera Preview
+         **/
+        mPreview = Preview.Builder()
+            .build()
+            .also { it.setSurfaceProvider(surfaceProvider) }
+
+        /**
+         * Initialize Camera Capture
+         **/
+        mImageCapture = ImageCapture.Builder()
+            .setFlashMode(if (isFlashEnabled) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF)
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+            .build()
+
+    }
+
+
+    // Display flash animation to indicate that photo was captured
+    private fun flashImage(container: View?) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
+        container?.postDelayed({
+            container.foreground = ColorDrawable(Color.WHITE)
+            container.postDelayed(
+                { container.foreground = null }, 50L
+            )
+        }, 100L)
+    }
+
 
 }

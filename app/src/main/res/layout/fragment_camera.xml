@@ -16,37 +16,95 @@
         android:layout_height="match_parent"
         tools:context=".ui.features.camera.CameraFragment">
 
+        <androidx.camera.view.PreviewView
+            android:id="@+id/cameraView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="#000000"
             android:paddingStart="16dp"
             android:paddingTop="24dp"
             android:paddingEnd="16dp"
             android:paddingBottom="24dp"
-            android:background="#A6A6A6"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sendImageButton"
-            hideOnLoading="@{viewModel.sendingImageUiState}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:elevation="8dp"
             android:layout_marginEnd="16dp"
+            android:visibility="gone"
             android:layout_marginBottom="48dp"
             android:text="@string/send_image_button"
             android:textAllCaps="false"
+            app:elevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/capturePhotoBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
+
+            android:layout_marginBottom="32dp"
+            android:insetTop="0dp"
+
+            android:insetBottom="0dp"
+            android:minHeight="56dp"
+            android:paddingStart="32dp"
+
+            android:paddingEnd="32dp"
+            android:text="@string/txt_btn_capture_photo"
+            android:textColor="@color/white"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_camera"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toEndOf="@+id/flashImageButton"
+            app:strokeColor="@color/white"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/flashImageButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginStart="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_flash_on"
+            app:iconTint="@color/white"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:strokeColor="@color/white"
+
+            app:strokeWidth="1dp" />
+
+
 
         <ProgressBar
             android:id="@+id/progressBar"

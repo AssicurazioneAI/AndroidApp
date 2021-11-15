@@ -88,6 +88,7 @@ dependencies {
     implementCoroutine()
     implementNavigationComponent()
     implementKoinAndroid()
+    implementCameraX()
 
 
     testImplementation(TestingDeps.junit)

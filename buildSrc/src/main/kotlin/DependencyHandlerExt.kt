@@ -15,6 +15,12 @@ fun DependencyHandler.implementKoinAndroid() {
     implement(Deps.koinAndroid)
 }
 
+fun DependencyHandler.implementCameraX() {
+    implement(Deps.cameraXCore)
+    implement(Deps.cameraXLifeCycle)
+    implement(Deps.cameraXView)
+}
+
 fun DependencyHandler.testImplementKoin() {
     testImplement(TestingDeps.koinCore)
     testImplement(TestingDeps.koinJUnit4)
