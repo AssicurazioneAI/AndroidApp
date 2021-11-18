@@ -16,8 +16,9 @@
     <string name="txt_btn_continue">Continue</string>
     <string name="msg_accepting_terms_and_conditions">By continuing, I accept the Terms of condition, User agreements, and Privacy Policy</string>
     <string name="verify_phone_title">Verify Your Phone Number</string>
-    <string name="msg_verification_code_sent_phone">Enter the code  we\'ve sent to your phone number that is +36 1 234 5678</string>
+    <string name="msg_verification_code_sent_phone">Enter the code  we\'ve sent to your phone number that is %s</string>
     <string name="txt_btn_resend_code">Resend Code</string>
+    <string name="txt_btn_resend_code_in_sec">Resend Code in %s</string>
     <string name="error_no_camera_permission">Camera permission is needed to capture a photo</string>
     <string name="txt_btn_capture_photo">Take a shot</string>
 </resources>

@@ -2,6 +2,7 @@ package com.mmk.assicurazioneai.ui.features.auth.login
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -34,7 +35,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 )
             findNavController().navigate(
                 R.id.action_loginFragment_to_otpCodeFragment,
-                null,
+                bundleOf("phoneNumber" to binding.phoneEditText.text.toString()),
                 null,
                 extras
             )

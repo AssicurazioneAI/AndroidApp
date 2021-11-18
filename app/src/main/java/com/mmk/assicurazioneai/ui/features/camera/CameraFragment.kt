@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.RectF
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -76,8 +77,8 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         super.observeValues()
         cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
             it?.let {
-                context.toast("$it")
                 viewModel.setImagePath(it)
+                binding.rectangleView.drawRectBounds(listOf(RectF(100f,200f,500f,600f)))
             }
         }
 
