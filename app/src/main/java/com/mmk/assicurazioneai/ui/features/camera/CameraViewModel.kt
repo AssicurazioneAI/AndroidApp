@@ -32,7 +32,6 @@ class CameraViewModel(private val gettingCarDamageUseCase: GettingCarDamageUseCa
     }
 
     fun sendImage() = executeUseCase(_sendingImageUiState) {
-        delay(1000)
         val imagePath: String? = _imagePath.value
         val response = gettingCarDamageUseCase(imagePath)
         response.onSuccess {
