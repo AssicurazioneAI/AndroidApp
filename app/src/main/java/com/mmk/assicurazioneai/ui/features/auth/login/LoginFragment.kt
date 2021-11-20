@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
-import az.reseptron.patient.util.KeyboardEventListener
+import com.mmk.assicurazioneai.utils.KeyboardEventListener
 import com.mmk.assicurazioneai.R
 import com.mmk.assicurazioneai.databinding.FragmentLoginBinding
 

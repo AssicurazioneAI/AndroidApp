@@ -15,6 +15,9 @@ object Versions {
     const val optPinView="1.4.4"
     const val cameraX="1.0.2"
     const val cameraXView="1.0.0-alpha30"
+    const val moshi="1.12.0"
+    const val retrofit2="2.9.0"
+    const val okHttpLogging="4.2.1"
 
     //Testing Libraries Versions
     const val jUnit="4.12"

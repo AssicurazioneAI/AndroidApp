@@ -1,5 +1,6 @@
 package com.mmk.domain.model.error
 
+import java.lang.Exception
 import kotlin.math.E
 
 sealed class ErrorEntity {
@@ -12,11 +13,11 @@ sealed class ErrorEntity {
     }
 
     sealed class ApiError : ErrorEntity() {
-        object ServerProblem : ApiError()
-        data class Other(val errorMessage: String? = "") : ApiError()
+        data class ServerProblem(val exception: Exception) : ApiError()
+        data class Other(val errorMessage: String? = "", val errorCode: Int? = null) : ApiError()
     }
 
-    sealed class ImageError :ErrorEntity(){
+    sealed class ImageError : ErrorEntity() {
         object WrongFormat : ImageError()
     }
 

@@ -1,9 +1,10 @@
-package com.mmk.domain.usecase.image
+package com.mmk.domain.usecase.cardamage
 
 import com.google.common.truth.Truth.assertThat
+import com.mmk.domain.model.CarDamage
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity
-import com.mmk.domain.repository.image.ImageRepository
+import com.mmk.domain.repository.cardamage.CarRepository
 import com.mmk.domain.util.MainCoroutineRule
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,7 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class SendingImageUseCaseTest {
+class GettingCarDamageUseCaseTest {
 
     /**
      * 1)Image should not be empty, when it is empty or null should return EmptyOrNull Error
@@ -21,8 +22,8 @@ class SendingImageUseCaseTest {
      * 3)When sending image, if it fails from server it should return ApiError with message
      */
 
-    private lateinit var sendingImageUseCase: SendingImageUseCase
-    private lateinit var imageRepository: ImageRepository
+    private lateinit var gettingCarDamageUseCase: GettingCarDamageUseCase
+    private lateinit var carRepository: CarRepository
 
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
@@ -30,15 +31,15 @@ class SendingImageUseCaseTest {
 
     @Before
     fun setUp() {
-        imageRepository = mockk()
-        sendingImageUseCase = SendingImageUseCaseImpl(imageRepository)
+        carRepository = mockk()
+        gettingCarDamageUseCase = GettingCarDamageUseCaseImpl(carRepository)
     }
 
     @Test
     fun `sending image should return EmptyData Error when sending null image`() =
         mainCoroutineRule.runBlockingTest {
             val image: String? = null
-            val response: Result<Unit> = sendingImageUseCase(image)
+            val response: Result<CarDamage> = gettingCarDamageUseCase(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
             assertThat((response as Result.Error).errorEntity).isInstanceOf(ErrorEntity.CommonError.EmptyOrNullData::class.java)
 
@@ -48,7 +49,7 @@ class SendingImageUseCaseTest {
     fun `sending image should return EmptyData error when sending empty image`() =
         mainCoroutineRule.runBlockingTest {
             val image: String = ""
-            val response: Result<Unit> = sendingImageUseCase(image)
+            val response: Result<CarDamage> = gettingCarDamageUseCase(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
             assertThat((response as Result.Error).errorEntity).isInstanceOf(ErrorEntity.CommonError.EmptyOrNullData::class.java)
         }
@@ -57,8 +58,8 @@ class SendingImageUseCaseTest {
     fun `sending image should not call server function when it is empty or null`() =
         mainCoroutineRule.runBlockingTest {
             val image = null
-            val response: Result<Unit> = sendingImageUseCase(image)
-            coVerify(exactly = 0) { imageRepository.sendImage(any()) }
+            val response: Result<CarDamage> = gettingCarDamageUseCase(image)
+            coVerify(exactly = 0) { carRepository.getCarDamage(any()) }
         }
 
     @Test
@@ -66,8 +67,8 @@ class SendingImageUseCaseTest {
         mainCoroutineRule.runBlockingTest {
             val image: String = "imagePath"
 
-            coEvery { imageRepository.sendImage(any()) } returns Result.Success(Unit)
-            val response: Result<Unit> = sendingImageUseCase(image)
+            coEvery { carRepository.getCarDamage(any()) } returns Result.Success(CarDamage())
+            val response: Result<CarDamage> = gettingCarDamageUseCase(image)
             assertThat(response).isInstanceOf(Result.Success::class.java)
         }
 
@@ -76,12 +77,12 @@ class SendingImageUseCaseTest {
         mainCoroutineRule.runBlockingTest {
             val image: String = "imagePath"
             val errorMessage = "Error occurred while sending an image"
-            coEvery { imageRepository.sendImage(any()) } returns Result.Error(
+            coEvery { carRepository.getCarDamage(any()) } returns Result.Error(
                 errorEntity = ErrorEntity.ApiError.Other(
                     errorMessage
                 )
             )
-            val response: Result<Unit> = sendingImageUseCase(image)
+            val response: Result<CarDamage> = gettingCarDamageUseCase(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
             assertThat((response as Result.Error).errorEntity).isEqualTo(
                 ErrorEntity.ApiError.Other(

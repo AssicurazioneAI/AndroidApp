@@ -21,6 +21,14 @@ fun DependencyHandler.implementCameraX() {
     implement(Deps.cameraXView)
 }
 
+fun DependencyHandler.implementRetrofitNetworking() {
+    implement(Deps.moshi)
+    implement(Deps.moshiKotlin)
+    implement(Deps.retrofit2)
+    implement(Deps.okHttpLogger)
+    implement(Deps.retrofit2Converter)
+}
+
 fun DependencyHandler.testImplementKoin() {
     testImplement(TestingDeps.koinCore)
     testImplement(TestingDeps.koinJUnit4)

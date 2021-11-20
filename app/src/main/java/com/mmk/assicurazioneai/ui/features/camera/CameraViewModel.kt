@@ -11,9 +11,9 @@ import com.mmk.assicurazioneai.utils.SingleEvent
 import com.mmk.domain.model.error.ErrorEntity
 import com.mmk.domain.model.onError
 import com.mmk.domain.model.onSuccess
-import com.mmk.domain.usecase.image.SendingImageUseCase
+import com.mmk.domain.usecase.cardamage.GettingCarDamageUseCase
 
-class CameraViewModel(private val sendingImageUseCase: SendingImageUseCase) : BaseViewModel() {
+class CameraViewModel(private val gettingCarDamageUseCase: GettingCarDamageUseCase) : BaseViewModel() {
 
     private var _sendingImageUiState: MutableLiveData<UiState> = MutableLiveData()
     val sendingImageUiState: LiveData<UiState> = _sendingImageUiState
@@ -32,7 +32,7 @@ class CameraViewModel(private val sendingImageUseCase: SendingImageUseCase) : Ba
 
     fun sendImage() = executeUseCase(_sendingImageUiState) {
         val imagePath: String? = _imagePath.value
-        val response = sendingImageUseCase(imagePath)
+        val response = gettingCarDamageUseCase(imagePath)
         response.onSuccess {
             _onImageSent.value = SingleEvent(Unit)
         }.onError {

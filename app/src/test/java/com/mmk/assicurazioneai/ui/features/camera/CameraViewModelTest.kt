@@ -7,9 +7,10 @@ import com.mmk.assicurazioneai.ui.base.ErrorMessage
 import com.mmk.assicurazioneai.ui.base.UiState
 import com.mmk.assicurazioneai.util.MainCoroutineRule
 import com.mmk.assicurazioneai.util.getOrAwaitValue
+import com.mmk.domain.model.CarDamage
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity
-import com.mmk.domain.usecase.image.SendingImageUseCase
+import com.mmk.domain.usecase.cardamage.GettingCarDamageUseCase
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -27,7 +28,7 @@ class CameraViewModelTest {
 
     private lateinit var cameraViewModel: CameraViewModel
 
-    private lateinit var sendingImageUseCase: SendingImageUseCase
+    private lateinit var gettingCarDamageUseCase: GettingCarDamageUseCase
 
 
     private lateinit var imagePath: Uri
@@ -44,8 +45,8 @@ class CameraViewModelTest {
     fun setUp() {
         imagePath = mockk()
         every { imagePath.toString() } returns "imagePath"
-        sendingImageUseCase = mockk()
-        cameraViewModel = CameraViewModel(sendingImageUseCase)
+        gettingCarDamageUseCase = mockk()
+        cameraViewModel = CameraViewModel(gettingCarDamageUseCase)
     }
 
     @Test(expected = TimeoutException::class)
@@ -58,9 +59,9 @@ class CameraViewModelTest {
     fun `verify UI is in loading state when sending image for given correct imagePath`() =
         mainCoroutineRule.runBlockingTest {
             val uiState = cameraViewModel.sendingImageUiState
-            coEvery { sendingImageUseCase(any()) } coAnswers {
+            coEvery { gettingCarDamageUseCase(any()) } coAnswers {
                 delay(1000)
-                Result.Success(Unit)
+                Result.Success(CarDamage())
             }
             cameraViewModel.setImagePath(imagePath)
             cameraViewModel.sendImage()
@@ -72,7 +73,7 @@ class CameraViewModelTest {
         val uiState = cameraViewModel.sendingImageUiState
         cameraViewModel.setImagePath(imagePath)
         val imagePathAsString = cameraViewModel.imagePath.getOrAwaitValue()
-        coEvery { sendingImageUseCase(imagePathAsString) } returns Result.Success(Unit)
+        coEvery { gettingCarDamageUseCase(imagePathAsString) } returns Result.Success(CarDamage())
         cameraViewModel.sendImage()
         assertThat(uiState.getOrAwaitValue()).isInstanceOf(UiState.Success::class.java)
     }
@@ -82,7 +83,7 @@ class CameraViewModelTest {
         val uiState = cameraViewModel.sendingImageUiState
         cameraViewModel.setImagePath(imagePath)
         val imagePathAsString = cameraViewModel.imagePath.getOrAwaitValue()
-        coEvery { sendingImageUseCase(imagePathAsString) } returns Result.Error()
+        coEvery { gettingCarDamageUseCase(imagePathAsString) } returns Result.Error()
         cameraViewModel.sendImage()
         assertThat(uiState.getOrAwaitValue()).isInstanceOf(UiState.Error::class.java)
     }
@@ -92,7 +93,7 @@ class CameraViewModelTest {
         val onImageSent = cameraViewModel.onImageSent
         cameraViewModel.setImagePath(imagePath)
         val imagePathAsString = cameraViewModel.imagePath.getOrAwaitValue()
-        coEvery { sendingImageUseCase(imagePathAsString) } returns Result.Success(Unit)
+        coEvery { gettingCarDamageUseCase(imagePathAsString) } returns Result.Success(CarDamage())
         cameraViewModel.sendImage()
         assertThat(onImageSent.getOrAwaitValue().peekContent()).isNotNull()
     }
@@ -100,7 +101,7 @@ class CameraViewModelTest {
     @Test
     fun `verify ErrorEntity is not null when sending image fails`() {
         val errorEntity = ErrorEntity.CommonError.Unknown
-        coEvery { sendingImageUseCase(any()) } returns Result.Error(errorEntity)
+        coEvery { gettingCarDamageUseCase(any()) } returns Result.Error(errorEntity)
         cameraViewModel.setImagePath(null)
         cameraViewModel.sendImage()
         val errorStateValue = cameraViewModel.errorEntity.getOrAwaitValue()
@@ -111,7 +112,7 @@ class CameraViewModelTest {
     fun `verify error message is server error message when sending image fails with ApiError`() {
         val errorMessage = "Image is not a selfie"
         val errorEntity = ErrorEntity.ApiError.Other(errorMessage)
-        coEvery { sendingImageUseCase(any()) } returns Result.Error(errorEntity)
+        coEvery { gettingCarDamageUseCase(any()) } returns Result.Error(errorEntity)
 
         cameraViewModel.setImagePath(null)
 

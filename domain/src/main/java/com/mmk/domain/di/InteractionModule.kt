@@ -1,9 +1,9 @@
 package com.mmk.domain.di
 
-import com.mmk.domain.usecase.image.SendingImageUseCase
-import com.mmk.domain.usecase.image.SendingImageUseCaseImpl
+import com.mmk.domain.usecase.cardamage.GettingCarDamageUseCase
+import com.mmk.domain.usecase.cardamage.GettingCarDamageUseCaseImpl
 import org.koin.dsl.module
 
 val interactionModule = module {
-    factory<SendingImageUseCase> { SendingImageUseCaseImpl(get()) }
+    factory<GettingCarDamageUseCase> { GettingCarDamageUseCaseImpl(get()) }
 }
