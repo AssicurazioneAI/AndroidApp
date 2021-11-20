@@ -21,4 +21,6 @@
     <string name="txt_btn_resend_code_in_sec">Resend Code in %s</string>
     <string name="error_no_camera_permission">Camera permission is needed to capture a photo</string>
     <string name="txt_btn_capture_photo">Take a shot</string>
+    <string name="title_progress">Processing...</string>
+    <string name="description_progress">Please, wait a bit while we are detecting damages in your car.</string>
 </resources>

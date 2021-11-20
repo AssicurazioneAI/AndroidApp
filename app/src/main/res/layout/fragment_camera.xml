@@ -46,20 +46,7 @@
             android:layout_height="match_parent" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/sendImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="48dp"
-            android:text="@string/send_image_button"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            app:elevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
 
         <com.google.android.material.button.MaterialButton
@@ -112,11 +99,13 @@
             app:strokeWidth="1dp" />
 
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
+        <com.mmk.assicurazioneai.utils.widgets.ProgressView
+            android:id="@+id/progressView"
             showOnLoading="@{viewModel.sendingImageUiState}"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="48dp"
+            app:title="@string/title_progress"
+            app:description="@string/description_progress"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="top"
-                app:constraint_referenced_ids="verifyButton,progressBar" />
+                app:constraint_referenced_ids="verifyButton,progressView" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -166,7 +166,7 @@
                 app:layout_constraintStart_toStartOf="@id/phoneInputLayout" />
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/progressView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
