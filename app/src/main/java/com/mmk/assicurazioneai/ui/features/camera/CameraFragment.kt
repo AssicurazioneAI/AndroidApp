@@ -15,6 +15,7 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.mmk.assicurazioneai.R
 import com.mmk.assicurazioneai.databinding.FragmentCameraBinding
@@ -23,6 +24,8 @@ import com.mmk.assicurazioneai.utils.ImageUriCreator
 import com.mmk.assicurazioneai.utils.binding.viewBinding
 import com.mmk.assicurazioneai.utils.extensions.toast
 import com.mmk.assicurazioneai.utils.observeSingleEvent
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -70,7 +73,10 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         super.initView()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        askCameraPermission()
+        lifecycleScope.launch {
+            delay(400)
+            askCameraPermission()
+        }
     }
 
     override fun observeValues() {
@@ -78,18 +84,13 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
             it?.let {
                 viewModel.setImagePath(it)
-                binding.rectangleView.drawRectBounds(listOf(RectF(100f,200f,500f,600f)))
-            }
-        }
+                binding.imageView.setImageURI(it)
 
-        viewModel.imagePath.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.imageView.setImageURI(Uri.parse(it))
             }
         }
 
         viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
-            context.toast("Image is sent successfully")
+            binding.rectangleView.drawRectBounds(listOf(RectF(100f,200f,500f,600f)))
         }
 
         viewModel.isFlashOn.observe(viewLifecycleOwner){
@@ -99,9 +100,7 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
     override fun setClicks() {
         super.setClicks()
-        binding.sendImageButton.setOnClickListener {
-            viewModel.sendImage()
-        }
+
         binding.capturePhotoBtn.setOnClickListener {
             cameraCapture.captureImage(requireContext(), binding.root)
         }

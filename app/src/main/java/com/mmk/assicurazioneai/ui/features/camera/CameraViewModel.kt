@@ -12,6 +12,7 @@ import com.mmk.domain.model.error.ErrorEntity
 import com.mmk.domain.model.onError
 import com.mmk.domain.model.onSuccess
 import com.mmk.domain.usecase.cardamage.GettingCarDamageUseCase
+import kotlinx.coroutines.delay
 
 class CameraViewModel(private val gettingCarDamageUseCase: GettingCarDamageUseCase) : BaseViewModel() {
 
@@ -46,6 +47,7 @@ class CameraViewModel(private val gettingCarDamageUseCase: GettingCarDamageUseCa
     fun setImagePath(imageUri: Uri?) {
         imageUri?.let {
             _imagePath.value = it.toString()
+            sendImage()
         }
     }
 
