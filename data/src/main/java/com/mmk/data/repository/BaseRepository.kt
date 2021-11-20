@@ -14,7 +14,7 @@ abstract class BaseRepository(private val dispatcher: CoroutineDispatcher = Disp
         try {
             func.invoke()
         } catch (e: Exception) {
-            Result.Error(ErrorEntity.ApiError.ServerProblem(e))
+            Result.Error(ErrorEntity.CommonError.Unknown(e))
         }
     }
 }

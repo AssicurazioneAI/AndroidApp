@@ -8,7 +8,7 @@ sealed class ErrorEntity {
     sealed class CommonError : ErrorEntity() {
         object NoInternetConnection : CommonError()
         object EmptyOrNullData : CommonError()
-        object Unknown : CommonError()
+        data class Unknown(val exception: Exception? = null) : CommonError()
 
     }
 

@@ -100,7 +100,7 @@ class CameraViewModelTest {
 
     @Test
     fun `verify ErrorEntity is not null when sending image fails`() {
-        val errorEntity = ErrorEntity.CommonError.Unknown
+        val errorEntity = ErrorEntity.CommonError.Unknown()
         coEvery { gettingCarDamageUseCase(any()) } returns Result.Error(errorEntity)
         cameraViewModel.setImagePath(null)
         cameraViewModel.sendImage()

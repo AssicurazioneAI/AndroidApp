@@ -71,7 +71,7 @@ class CarRepositoryImplTest {
         }
 
     @Test()
-    fun `sending image should return server Error when server throw exception`() =
+    fun `sending image should return unknown Error when server throw exception`() =
         mainCoroutineRule.runBlockingTest {
             val base64Image = "Base64Image"
             coEvery { imageHelper.getBase64StringFromImagePath(any()) } returns base64Image
@@ -79,9 +79,10 @@ class CarRepositoryImplTest {
             val response = imageRepository.getCarDamage("imagePath")
             assertThat(response).isInstanceOf(Result.Error::class.java)
             response as Result.Error
-            assertThat(response.errorEntity).isInstanceOf(ErrorEntity.ApiError.ServerProblem::class.java)
+            assertThat(response.errorEntity).isInstanceOf(ErrorEntity.CommonError.Unknown::class.java)
 
         }
+
 
     @Test()
     fun `sendImage should verify image is in Base64 format before sending to the server`() =

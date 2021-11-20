@@ -63,7 +63,7 @@ class BaseRepositoryTest {
             }
             //Then
             assertThat(response).isInstanceOf(Result.Error::class.java)
-            assertThat((response as Result.Error).errorEntity).isInstanceOf(ErrorEntity.ApiError.ServerProblem::class.java)
+            assertThat((response as Result.Error).errorEntity).isInstanceOf(ErrorEntity.CommonError.Unknown::class.java)
         }
 
 }
