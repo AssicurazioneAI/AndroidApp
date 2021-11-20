@@ -54,10 +54,10 @@ abstract class BaseViewModel : ViewModel() {
         errorEntity?.let {
             when (it) {
                 is ErrorEntity.ApiError.Other -> setErrorMessage(ErrorMessage.Message(it.errorMessage))
-                ErrorEntity.ApiError.ServerProblem -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_server_problem))
+                is ErrorEntity.ApiError.ServerProblem -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_server_problem))
                 ErrorEntity.CommonError.EmptyOrNullData -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_empty_data))
                 ErrorEntity.CommonError.NoInternetConnection -> callOnNoInternetConnection()
-                ErrorEntity.CommonError.Unknown -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_unknown_error_occured))
+                is ErrorEntity.CommonError.Unknown -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_unknown_error_occured))
                 else -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_unknown_error_occured))
             }
         }

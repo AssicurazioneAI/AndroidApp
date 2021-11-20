@@ -1,9 +1,9 @@
 package com.mmk.data.di
 
-import com.mmk.data.repository.ImageRepositoryImpl
-import com.mmk.domain.repository.image.ImageRepository
+import com.mmk.data.repository.CarRepositoryImpl
+import com.mmk.domain.repository.cardamage.CarRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    factory<ImageRepository> { ImageRepositoryImpl(get(), get()) }
+    factory<CarRepository> { CarRepositoryImpl(get(), get()) }
 }

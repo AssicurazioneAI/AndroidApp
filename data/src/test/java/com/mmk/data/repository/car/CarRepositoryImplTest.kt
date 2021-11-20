@@ -1,12 +1,14 @@
-package com.mmk.data.repository.image
+package com.mmk.data.repository.car
 
 import com.google.common.truth.Truth.assertThat
-import com.mmk.data.repository.ImageRepositoryImpl
-import com.mmk.data.source.remote.image.ImageRemoteDataSource
+import com.mmk.data.repository.CarRepositoryImpl
+import com.mmk.data.source.remote.car.CarDamageResponse
+import com.mmk.data.source.remote.car.CarRemoteDataSource
 import com.mmk.data.util.ImageHelper
+import com.mmk.domain.model.CarDamage
 import com.mmk.domain.model.Result
 import com.mmk.domain.model.error.ErrorEntity
-import com.mmk.domain.repository.image.ImageRepository
+import com.mmk.domain.repository.cardamage.CarRepository
 import com.mmk.domain.util.MainCoroutineRule
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +19,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class ImageRepositoryImplTest {
+class CarRepositoryImplTest {
 
     /**
      * 1) If image is sent successfully, it should return Success
@@ -27,8 +29,8 @@ class ImageRepositoryImplTest {
      *    WrongFormat Error State
      */
 
-    private lateinit var imageRepository: ImageRepository
-    private lateinit var imageRemoteDataSource: ImageRemoteDataSource
+    private lateinit var imageRepository: CarRepository
+    private lateinit var carRemoteDataSource: CarRemoteDataSource
     private lateinit var imageHelper: ImageHelper
 
     @get:Rule
@@ -36,9 +38,10 @@ class ImageRepositoryImplTest {
 
     @Before
     fun setUp() {
-        imageRemoteDataSource = mockk()
+        carRemoteDataSource = mockk()
         imageHelper = mockk()
-        imageRepository = ImageRepositoryImpl(imageRemoteDataSource, imageHelper,mainCoroutineRule.dispatcher)
+        imageRepository =
+            CarRepositoryImpl(carRemoteDataSource, imageHelper, mainCoroutineRule.dispatcher)
 
     }
 
@@ -47,9 +50,12 @@ class ImageRepositoryImplTest {
         mainCoroutineRule.runBlockingTest {
             val image = "imageSrc"
             val base64String = "Base64String"
-            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64String
-            coEvery { imageRemoteDataSource.sendImage(base64String) } returns Result.Success(Unit)
-            val response = imageRepository.sendImage(image)
+            coEvery { imageHelper.getBase64StringFromImagePath(any()) } returns base64String
+
+            coEvery { carRemoteDataSource.getDamageResult(base64String) } returns Result.Success(
+                CarDamageResponse.EMPTY
+            )
+            val response = imageRepository.getCarDamage(image)
             assertThat(response).isInstanceOf(Result.Success::class.java)
         }
 
@@ -58,9 +64,9 @@ class ImageRepositoryImplTest {
         mainCoroutineRule.runBlockingTest {
             val image = "imageSrc"
             val base64String = "Base64String"
-            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64String
-            coEvery { imageRemoteDataSource.sendImage(any()) } returns Result.Error()
-            val response = imageRepository.sendImage(image)
+            coEvery { imageHelper.getBase64StringFromImagePath(any()) } returns base64String
+            coEvery { carRemoteDataSource.getDamageResult(any()) } returns Result.Error()
+            val response = imageRepository.getCarDamage(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
         }
 
@@ -68,31 +74,32 @@ class ImageRepositoryImplTest {
     fun `sending image should return unknown Error when server throw exception`() =
         mainCoroutineRule.runBlockingTest {
             val base64Image = "Base64Image"
-            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64Image
-            coEvery { imageRemoteDataSource.sendImage(base64Image) } throws Exception()
-            val response = imageRepository.sendImage("imagePath")
+            coEvery { imageHelper.getBase64StringFromImagePath(any()) } returns base64Image
+            coEvery { carRemoteDataSource.getDamageResult(base64Image) } throws Exception()
+            val response = imageRepository.getCarDamage("imagePath")
             assertThat(response).isInstanceOf(Result.Error::class.java)
             response as Result.Error
             assertThat(response.errorEntity).isInstanceOf(ErrorEntity.CommonError.Unknown::class.java)
 
         }
 
+
     @Test()
     fun `sendImage should verify image is in Base64 format before sending to the server`() =
         mainCoroutineRule.runBlockingTest {
             val image = "imagePath"
             val base64String = "Base64String"
-            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns base64String
-            val response = imageRepository.sendImage(image)
-            coVerify { imageRemoteDataSource.sendImage(base64String) }
+            coEvery { imageHelper.getBase64StringFromImagePath(any()) } returns base64String
+            val response = imageRepository.getCarDamage(image)
+            coVerify { carRemoteDataSource.getDamageResult(base64String) }
         }
 
     @Test()
     fun `sendImage should return Error when image is not Base64String format`() =
         mainCoroutineRule.runBlockingTest {
             val image = "imagePath"
-            coEvery { imageHelper.getBase64StringFromImagePath(any())} returns null
-            val response = imageRepository.sendImage(image)
+            coEvery { imageHelper.getBase64StringFromImagePath(any()) } returns null
+            val response = imageRepository.getCarDamage(image)
             assertThat(response).isInstanceOf(Result.Error::class.java)
             response as Result.Error
             assertThat(response.errorEntity).isInstanceOf(ErrorEntity.ImageError.WrongFormat::class.java)

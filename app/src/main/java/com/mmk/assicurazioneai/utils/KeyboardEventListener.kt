@@ -1,4 +1,4 @@
-package az.reseptron.patient.util
+package com.mmk.assicurazioneai.utils
 
 import android.graphics.Rect
 import android.os.Build
@@ -20,7 +20,6 @@ class KeyboardEventListener(
 
 
     private val listener = ViewTreeObserver.OnGlobalLayoutListener {
-
         val r = Rect()
         view.getWindowVisibleDisplayFrame(r)
         val height = view.context.resources.displayMetrics.heightPixels

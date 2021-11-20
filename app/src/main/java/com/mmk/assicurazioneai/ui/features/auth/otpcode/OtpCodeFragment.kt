@@ -1,18 +1,12 @@
 package com.mmk.assicurazioneai.ui.features.auth.otpcode
 
 import android.os.Bundle
-import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
-import az.reseptron.patient.util.KeyboardEventListener
 import com.mmk.assicurazioneai.R
-import com.mmk.assicurazioneai.databinding.FragmentCameraBinding
-import com.mmk.assicurazioneai.databinding.FragmentLoginBinding
 import com.mmk.assicurazioneai.databinding.FragmentOtpcodeBinding
 import com.mmk.assicurazioneai.ui.base.BaseFragment
-import com.mmk.assicurazioneai.ui.features.camera.CameraViewModel
 import com.mmk.assicurazioneai.utils.binding.viewBinding
 import com.mmk.assicurazioneai.utils.extensions.showKeyboard
 import com.mmk.assicurazioneai.utils.observeSingleEvent
