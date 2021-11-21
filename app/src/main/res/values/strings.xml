@@ -23,4 +23,8 @@
     <string name="txt_btn_capture_photo">Take a shot</string>
     <string name="title_progress">Processing...</string>
     <string name="description_progress">Please, wait a bit while we are detecting damages in your car.</string>
+    <string name="title_rate_dialog">How was your Experience?</string>
+    <string name="description_rate_dialog">Please, give your feedback for making our product better</string>
+    <string name="rate_submit_btn">Submit</string>
+    <string name="rate_cancel_btn">Exit</string>
 </resources>

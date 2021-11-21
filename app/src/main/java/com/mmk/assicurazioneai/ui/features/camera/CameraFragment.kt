@@ -90,10 +90,14 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         }
 
         viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
-            binding.rectangleView.drawRectBounds(listOf(RectF(100f,200f,500f,600f)))
+            binding.rectangleView.drawRectBounds(listOf(RectF(100f, 200f, 500f, 600f)))
+            lifecycleScope.launch {
+                delay(500L)
+                findNavController().navigate(R.id.action_cameraFragment_to_rateResultDialogFragment)
+            }
         }
 
-        viewModel.isFlashOn.observe(viewLifecycleOwner){
+        viewModel.isFlashOn.observe(viewLifecycleOwner) {
             cameraCapture.setFlashEnabled(it)
         }
     }
