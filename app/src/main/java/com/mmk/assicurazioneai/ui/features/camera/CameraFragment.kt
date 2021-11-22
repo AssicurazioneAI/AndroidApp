@@ -20,6 +20,7 @@ import androidx.viewbinding.ViewBinding
 import com.mmk.assicurazioneai.R
 import com.mmk.assicurazioneai.databinding.FragmentCameraBinding
 import com.mmk.assicurazioneai.ui.base.BaseFragment
+import com.mmk.assicurazioneai.ui.base.BaseViewModel
 import com.mmk.assicurazioneai.utils.ImageUriCreator
 import com.mmk.assicurazioneai.utils.binding.viewBinding
 import com.mmk.assicurazioneai.utils.extensions.toast
@@ -31,12 +32,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
-    private val viewModel: CameraViewModel by viewModel()
+    override val viewModel: CameraViewModel by viewModel()
+    override val binding: FragmentCameraBinding by viewBinding(FragmentCameraBinding::inflate)
+
 
     private lateinit var cameraCapture: CameraCapture
-
-    //    private lateinit var cameraCapture: CameraCapture
-    override val binding: FragmentCameraBinding by viewBinding(FragmentCameraBinding::inflate)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,13 +47,17 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
                     if (viewModel.imagePath.value.isNullOrEmpty()) {
                         isEnabled = false
                         requireActivity().onBackPressed()
-                    } else {
-                        viewModel.resetImagePath()
-                        askCameraPermission()
-                    }
+                    } else reset()
+
                 }
             })
 
+    }
+
+    private fun reset() {
+        viewModel.resetImagePath()
+        binding.rectangleView.clear()
+        askCameraPermission()
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -85,14 +89,14 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
             it?.let {
                 viewModel.setImagePath(it)
                 binding.imageView.setImageURI(it)
-
             }
         }
 
         viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
-            binding.rectangleView.drawRectBounds(listOf(RectF(100f, 200f, 500f, 600f)))
+            val coordinates = listOf(RectF(100f, 200f, 500f, 600f))
+            drawDamageRectangle(coordinates)
             lifecycleScope.launch {
-                delay(500L)
+                delay(2000L)
                 findNavController().navigate(R.id.action_cameraFragment_to_rateResultDialogFragment)
             }
         }
@@ -102,13 +106,12 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         }
     }
 
+
     override fun setClicks() {
         super.setClicks()
-
         binding.capturePhotoBtn.setOnClickListener {
             cameraCapture.captureImage(requireContext(), binding.root)
         }
-
     }
 
     private fun askCameraPermission() {
@@ -129,6 +132,10 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
             binding.cameraView.surfaceProvider
         )
 
+    }
+
+    private fun drawDamageRectangle(coordinates: List<RectF>) {
+        binding.rectangleView.drawRectBounds(coordinates)
     }
 
 

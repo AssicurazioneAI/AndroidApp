@@ -26,8 +26,6 @@ class CarRepositoryImpl(
                 is Result.Success -> Result.Success(response.data.mapToDomainModel())
             }
         }
-
-
     }
 
 

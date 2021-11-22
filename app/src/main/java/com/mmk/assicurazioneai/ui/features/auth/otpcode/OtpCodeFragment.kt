@@ -16,7 +16,7 @@ class OtpCodeFragment : BaseFragment(R.layout.fragment_otpcode) {
 
 
     override val binding: FragmentOtpcodeBinding by viewBinding(FragmentOtpcodeBinding::inflate)
-    private val viewModel: OtpCodeViewModel by viewModel()
+    override val viewModel: OtpCodeViewModel by viewModel()
 
     private lateinit var phoneNumber: String
 

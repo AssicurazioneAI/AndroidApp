@@ -25,6 +25,11 @@ class RectOverlayView(context: Context?, attrs: AttributeSet?) : View(context, a
         invalidate()
     }
 
+    fun clear(){
+        rectangleCoordinates.clear()
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         rectangleCoordinates.forEach { canvas?.drawRect(it, paint) }

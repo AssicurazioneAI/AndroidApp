@@ -27,4 +27,5 @@
     <string name="description_rate_dialog">Please, give your feedback for making our product better</string>
     <string name="rate_submit_btn">Submit</string>
     <string name="rate_cancel_btn">Exit</string>
+    <string name="rate_message">Thank you for your feedback :)</string>
 </resources>

@@ -55,63 +55,77 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/button4"
+                android:id="@+id/rateButton1"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="?actionBarItemBackground"
+                android:scaleType="fitCenter"
                 android:src="@drawable/rate_1"
+                android:tag="1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button5"
+                app:layout_constraintEnd_toStartOf="@+id/rateButton2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <ImageButton
-                android:id="@+id/button3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/rateButton2"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?actionBarItemBackground"
+                android:tag="2"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rate_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/rateButton3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/rateButton1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/rateButton3"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?actionBarItemBackground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rate_3"
+                android:tag="3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/rateButton4"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/rateButton2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/rateButton4"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?actionBarItemBackground"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rate_4"
+                android:tag="4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/rateButton5"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/rateButton3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageButton
+                android:id="@+id/rateButton5"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?actionBarItemBackground"
+                android:scaleType="fitCenter"
+                android:scaleX="1.6"
+                android:scaleY="1.6"
+                android:tag="5"
                 android:src="@drawable/rate_5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/button2"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?actionBarItemBackground"
-                android:src="@drawable/rate_4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/button5"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?actionBarItemBackground"
-                android:src="@drawable/rate_2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button4"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/button"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?actionBarItemBackground"
-                android:src="@drawable/rate_3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button2"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button5"
+                app:layout_constraintStart_toEndOf="@+id/rateButton4"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

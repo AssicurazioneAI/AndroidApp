@@ -18,12 +18,23 @@ object BindingAdapters {
     @JvmStatic
     fun View.showOnLoading(uiState: UiState?) {
         this.apply {
-            isVisible = when (uiState) {
-                UiState.Loading -> true
-                else -> false
+            when (uiState) {
+                UiState.Loading -> {
+                    animate().scaleX(1f).scaleY(1f).withStartAction {
+                        isVisible = true
+                    }
+                }
+                else -> {
+                    animate().scaleX(0f).scaleY(0f).withEndAction {
+                        isVisible = false
+                    }
+
+                }
             }
         }
     }
+
+
 
 
     @BindingAdapter("hideOnLoading")
