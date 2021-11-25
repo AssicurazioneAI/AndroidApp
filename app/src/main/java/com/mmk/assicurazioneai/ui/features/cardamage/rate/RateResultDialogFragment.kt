@@ -1,4 +1,4 @@
-package com.mmk.assicurazioneai.ui.features.rate
+package com.mmk.assicurazioneai.ui.features.cardamage.rate
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

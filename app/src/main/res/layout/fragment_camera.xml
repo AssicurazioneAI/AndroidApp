@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.mmk.assicurazioneai.ui.features.camera.CameraViewModel" />
+            type="com.mmk.assicurazioneai.ui.features.cardamage.camera.CameraViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.features.camera.CameraFragment">
+        tools:context=".ui.features.cardamage.camera.CameraFragment">
 
 
         <ImageView

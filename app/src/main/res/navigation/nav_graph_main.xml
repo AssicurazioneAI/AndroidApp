@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.mmk.assicurazioneai.ui.features.camera.CameraFragment"
+        android:name="com.mmk.assicurazioneai.ui.features.cardamage.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera">
         <action
-            android:id="@+id/action_cameraFragment_to_rateResultDialogFragment"
-            app:destination="@id/rateResultDialogFragment" />
+            android:id="@+id/action_cameraFragment_to_damageResultDialogFragment"
+            app:destination="@id/damageResultDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -29,18 +29,18 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        tools:layout="@layout/fragment_login"
         android:name="com.mmk.assicurazioneai.ui.features.auth.login.LoginFragment"
-        android:label="LoginFragment">
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_otpCodeFragment"
             app:destination="@id/otpCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/otpCodeFragment"
-        tools:layout="@layout/fragment_otpcode"
         android:name="com.mmk.assicurazioneai.ui.features.auth.otpcode.OtpCodeFragment"
-        android:label="OtpCodeFragment">
+        android:label="OtpCodeFragment"
+        tools:layout="@layout/fragment_otpcode">
         <action
             android:id="@+id/action_otpCodeFragment_to_cameraFragment"
             app:destination="@id/cameraFragment"
@@ -52,12 +52,28 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="phoneNumber"
-            app:argType="string"
-            android:defaultValue="" />
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
     <dialog
+        android:id="@+id/damageResultDialogFragment"
+        android:name="com.mmk.assicurazioneai.ui.features.cardamage.damageresult.DamageResultDialogFragment"
+        android:label="RateResultDialogFragment"
+        tools:layout="@layout/fragment_damage_result">
+        <action
+            android:id="@+id/action_damageResultDialogFragment_to_rateResultDialogFragment"
+            app:popUpTo="@id/damageResultDialogFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/rateResultDialogFragment" />
+        <argument
+            android:name="damageResultType"
+            android:defaultValue=""
+            app:argType="string" />
+    </dialog>
+
+    <dialog
         android:id="@+id/rateResultDialogFragment"
-        tools:layout="@layout/fragment_rate_result"
-        android:name="com.mmk.assicurazioneai.ui.features.rate.RateResultDialogFragment"
-        android:label="RateResultDialogFragment" />
+        android:name="com.mmk.assicurazioneai.ui.features.cardamage.rate.RateResultDialogFragment"
+        android:label="RateResultDialogFragment"
+        tools:layout="@layout/fragment_rate_result" />
 </navigation>
