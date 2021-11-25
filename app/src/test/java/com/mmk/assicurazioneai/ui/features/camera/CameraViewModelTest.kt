@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.mmk.assicurazioneai.ui.base.ErrorMessage
 import com.mmk.assicurazioneai.ui.base.UiState
+import com.mmk.assicurazioneai.ui.features.cardamage.camera.CameraViewModel
 import com.mmk.assicurazioneai.util.MainCoroutineRule
 import com.mmk.assicurazioneai.util.getOrAwaitValue
 import com.mmk.domain.model.CarDamage

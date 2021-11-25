@@ -1,4 +1,4 @@
-package com.mmk.assicurazioneai.ui.features.camera
+package com.mmk.assicurazioneai.ui.features.cardamage.camera
 
 
 import androidx.navigation.fragment.findNavController
@@ -15,12 +15,14 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.mmk.assicurazioneai.R
 import com.mmk.assicurazioneai.databinding.FragmentCameraBinding
 import com.mmk.assicurazioneai.ui.base.BaseFragment
 import com.mmk.assicurazioneai.ui.base.BaseViewModel
+import com.mmk.assicurazioneai.ui.features.cardamage.damageresult.DamageResultDialogFragment
 import com.mmk.assicurazioneai.utils.ImageUriCreator
 import com.mmk.assicurazioneai.utils.binding.viewBinding
 import com.mmk.assicurazioneai.utils.extensions.toast
@@ -96,8 +98,12 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
             val coordinates = listOf(RectF(100f, 200f, 500f, 600f))
             drawDamageRectangle(coordinates)
             lifecycleScope.launch {
-                delay(2000L)
-                findNavController().navigate(R.id.action_cameraFragment_to_rateResultDialogFragment)
+                val damageType = "HARD DAMAGE"
+                delay(1000L)
+                findNavController().navigate(
+                    R.id.action_cameraFragment_to_damageResultDialogFragment,
+                    bundleOf(DamageResultDialogFragment.ARGS_KEY_DAMAGE_TYPE to damageType)
+                )
             }
         }
 

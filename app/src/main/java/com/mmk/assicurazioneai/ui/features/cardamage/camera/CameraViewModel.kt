@@ -1,4 +1,4 @@
-package com.mmk.assicurazioneai.ui.features.camera
+package com.mmk.assicurazioneai.ui.features.cardamage.camera
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

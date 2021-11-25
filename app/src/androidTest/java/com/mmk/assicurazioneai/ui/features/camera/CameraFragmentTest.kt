@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.filters.MediumTest
 import com.mmk.assicurazioneai.R
+import com.mmk.assicurazioneai.ui.features.cardamage.camera.CameraFragment
 import org.junit.Assert.*
 
 import org.junit.After

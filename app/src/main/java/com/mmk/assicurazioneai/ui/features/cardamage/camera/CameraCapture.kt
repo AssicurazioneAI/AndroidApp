@@ -1,4 +1,4 @@
-package com.mmk.assicurazioneai.ui.features.camera
+package com.mmk.assicurazioneai.ui.features.cardamage.camera
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
