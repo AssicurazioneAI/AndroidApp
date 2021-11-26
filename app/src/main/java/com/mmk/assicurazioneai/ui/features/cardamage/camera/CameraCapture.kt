@@ -55,7 +55,6 @@ class CameraCapture(
                         ProcessCameraProvider.getInstance(context).get().unbindAll()
                         _capturedImageUri.value = imageUriCreator.getImageUriFromFile(photoFile)
 
-
                     }
 
                     override fun onError(exception: ImageCaptureException) {
