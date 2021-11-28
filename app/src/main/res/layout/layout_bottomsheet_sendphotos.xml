@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/CustomBottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/CustomBottomSheet"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
     <ImageView
@@ -25,37 +25,37 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginTop="32dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
-        android:textAllCaps="false"
-        android:layout_marginHorizontal="32dp"
         android:minHeight="56dp"
         android:text="@string/txt_btn_submit_photos"
+        android:textAllCaps="false"
         app:cornerRadius="16dp"
-       app:layout_constraintTop_toBottomOf="@id/centerLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/centerLine" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/retakeButton"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minHeight="56dp"
+        android:text="@string/txt_btn_retake_photos"
+        android:textAllCaps="false"
         android:textColor="#207B34"
         app:backgroundTint="#DEFFF3"
-        android:insetBottom="0dp"
-        android:textAllCaps="false"
-        android:layout_marginHorizontal="32dp"
-        android:minHeight="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="32dp"
-        android:text="@string/txt_btn_retake_photos"
         app:cornerRadius="16dp"
-        app:layout_constraintTop_toBottomOf="@id/sendButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

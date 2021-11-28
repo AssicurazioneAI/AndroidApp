@@ -29,6 +29,6 @@
     <string name="rate_cancel_btn">Exit</string>
     <string name="rate_message">Thank you for your feedback :)</string>
     <string name="rate__btn">Rate</string>
-    <string name="txt_btn_submit_photos">Submit photos</string>
-    <string name="txt_btn_retake_photos">Retake photos</string>
+    <string name="txt_btn_submit_photos">Analyze car</string>
+    <string name="txt_btn_retake_photos">Retake photo</string>
 </resources>
