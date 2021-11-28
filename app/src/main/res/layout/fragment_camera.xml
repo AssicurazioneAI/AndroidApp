@@ -13,102 +13,63 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:animateLayoutChanges="true"
         android:layout_height="match_parent"
         tools:context=".ui.features.cardamage.camera.CameraFragment">
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#000000"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="24dp"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:src="@tools:sample/backgrounds/scenic" />
 
         <androidx.camera.view.PreviewView
             android:id="@+id/cameraView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.mmk.assicurazioneai.utils.widgets.RectOverlayView
-            android:id="@+id/rectangleView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
+            android:id="@+id/galleryButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#defff3"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_gallery"
+            android:tint="#207B34"
+            app:layout_constraintBottom_toBottomOf="@id/capturePhotoBtn"
+            app:layout_constraintEnd_toStartOf="@id/capturePhotoBtn"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/capturePhotoBtn"
+            app:roundPercent="1" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
             android:id="@+id/capturePhotoBtn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            visibility="@{viewModel.imagePath==null}"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="32dp"
-            android:insetTop="0dp"
-
-            android:insetBottom="0dp"
-            android:minHeight="56dp"
-            android:paddingStart="32dp"
-
-            android:paddingEnd="32dp"
-            android:text="@string/txt_btn_capture_photo"
-            android:textColor="@color/white"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/ic_camera"
-            app:iconTint="@color/white"
+            android:background="@drawable/bg_circle_btn"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_camera"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:roundPercent="1" />
 
-            app:layout_constraintStart_toEndOf="@+id/flashImageButton"
-            app:strokeColor="@color/white"
-            app:strokeWidth="1dp" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.constraintlayout.utils.widget.ImageFilterButton
             android:id="@+id/flashImageButton"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            visibility="@{viewModel.imagePath==null}"
-            android:layout_width="56dp"
-
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="32dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="#defff3"
+            android:foreground="?android:attr/selectableItemBackground"
             android:onClick="@{() -> viewModel.changeFlashMode()}"
-            android:textColor="@color/white"
-            app:cornerRadius="12dp"
-            app:icon="@{viewModel.isFlashOn ? @drawable/ic_flash_on: @drawable/ic_flash_off}"
-            app:iconTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:strokeColor="@color/white"
-            app:strokeWidth="1dp" />
 
-
-        <com.mmk.assicurazioneai.utils.widgets.ProgressView
-            android:id="@+id/progressView"
-            showOnLoading="@{viewModel.sendingImageUiState}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="48dp"
-            android:scaleX="0"
-            android:scaleY="0"
-            app:description="@string/description_progress"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@{viewModel.isFlashOn ? @drawable/ic_flash_on: @drawable/ic_flash_off}"
+            android:tint="#207B34"
+            app:layout_constraintBottom_toBottomOf="@id/capturePhotoBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/title_progress" />
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toEndOf="@id/capturePhotoBtn"
+            app:layout_constraintTop_toTopOf="@id/capturePhotoBtn"
+            app:roundPercent="1"
+            tools:src="@drawable/ic_flash_off" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

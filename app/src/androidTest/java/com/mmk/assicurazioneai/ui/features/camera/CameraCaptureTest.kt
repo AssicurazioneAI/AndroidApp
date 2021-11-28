@@ -1,23 +1,5 @@
 package com.mmk.assicurazioneai.ui.features.camera
 
-import android.net.Uri
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
-import androidx.test.annotation.UiThreadTest
-
-import com.google.common.truth.Truth.assertThat
-import com.mmk.assicurazioneai.util.FakeActivityResultRegistry
-import com.mmk.assicurazioneai.util.getOrAwaitValu
-import com.mmk.assicurazioneai.utils.ImageUriCreator
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.unmockkAll
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
-import java.util.concurrent.TimeoutException
-
 class CameraCaptureTest {
 
 //    private lateinit var registry: FakeActivityResultRegistry<Uri>

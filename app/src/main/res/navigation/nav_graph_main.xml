@@ -10,9 +10,10 @@
         android:name="com.mmk.assicurazioneai.ui.features.cardamage.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera">
+
         <action
-            android:id="@+id/action_cameraFragment_to_damageResultDialogFragment"
-            app:destination="@id/damageResultDialogFragment" />
+            android:id="@+id/action_cameraFragment_to_carDamageAnalyzeFragment"
+            app:destination="@id/carDamageAnalyzeFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -76,4 +77,16 @@
         android:name="com.mmk.assicurazioneai.ui.features.cardamage.rate.RateResultDialogFragment"
         android:label="RateResultDialogFragment"
         tools:layout="@layout/fragment_rate_result" />
+    <fragment
+        android:id="@+id/carDamageAnalyzeFragment"
+        tools:layout="@layout/fragment_analyze_damage"
+        android:name="com.mmk.assicurazioneai.ui.features.cardamage.analyze.CarDamageAnalyzeFragment"
+        android:label="CarDamageAnalyzeFragment" >
+        <action
+            android:id="@+id/action_carDamageAnalyzeFragment_to_damageResultDialogFragment"
+            app:destination="@id/damageResultDialogFragment" />
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+    </fragment>
 </navigation>
