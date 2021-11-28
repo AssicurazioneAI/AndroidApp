@@ -16,44 +16,16 @@
         android:layout_height="match_parent"
         tools:context=".ui.features.cardamage.camera.CameraFragment">
 
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#000000"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="24dp"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
         <androidx.camera.view.PreviewView
             android:id="@+id/cameraView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.mmk.assicurazioneai.utils.widgets.RectOverlayView
-            android:id="@+id/rectangleView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
         <androidx.constraintlayout.utils.widget.ImageFilterButton
             android:id="@+id/galleryButton"
-            visibility="@{viewModel.imagePath==null}"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="#defff3"
-
-            android:clickable="@{viewModel.imagePath==null}"
 
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_gallery"
@@ -68,28 +40,23 @@
 
         <androidx.constraintlayout.utils.widget.ImageFilterButton
             android:id="@+id/capturePhotoBtn"
-            visibility="@{viewModel.imagePath==null}"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/bg_circle_btn"
-            app:roundPercent="1"
-            android:clickable="@{viewModel.imagePath==null}"
             android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_camera"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:roundPercent="1" />
 
 
         <androidx.constraintlayout.utils.widget.ImageFilterButton
             android:id="@+id/flashImageButton"
-            visibility="@{viewModel.imagePath==null}"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="#defff3"
-
-            android:clickable="@{viewModel.imagePath==null}"
             android:foreground="?android:attr/selectableItemBackground"
             android:onClick="@{() -> viewModel.changeFlashMode()}"
 
@@ -103,20 +70,5 @@
             app:roundPercent="1"
             tools:src="@drawable/ic_flash_off" />
 
-        <com.mmk.assicurazioneai.utils.widgets.ProgressView
-            android:id="@+id/progressView"
-            showOnLoading="@{viewModel.sendingImageUiState}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="48dp"
-            android:scaleX="0"
-
-            android:scaleY="0"
-            app:description="@string/description_progress"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/title_progress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.mmk.assicurazioneai.ui.features.cardamage.analyze.CarDamageAnalyzeViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:background="#CC000000"
+            tools:src="@drawable/test"
+            android:scaleType="fitCenter"
+            android:layout_height="match_parent" />
+
+        <com.mmk.assicurazioneai.utils.widgets.RectOverlayView
+            android:id="@+id/rectangleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.mmk.assicurazioneai.utils.widgets.ProgressView
+            android:id="@+id/progressView"
+            showOnLoading="@{viewModel.sendingImageUiState}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:layout_gravity="center"
+            app:description="@string/description_progress"
+            app:title="@string/title_progress" />
+
+        <!--    Bottom Sheet Content    -->
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/bottomSheet"
+                layout="@layout/layout_bottomsheet_sendphotos" />
+
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </FrameLayout>
+</layout>

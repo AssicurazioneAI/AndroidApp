@@ -52,9 +52,7 @@ class CameraCapture(
             mImageCapture!!.takePicture(outputOptions, ContextCompat.getMainExecutor(context),
                 object : ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        ProcessCameraProvider.getInstance(context).get().unbindAll()
                         _capturedImageUri.value = imageUriCreator.getImageUriFromFile(photoFile)
-
                     }
 
                     override fun onError(exception: ImageCaptureException) {

@@ -48,28 +48,6 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
     private lateinit var cameraCapture: CameraCapture
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (viewModel.imagePath.value.isNullOrEmpty()) {
-                        isEnabled = false
-                        requireActivity().onBackPressed()
-                    } else reset()
-
-                }
-            })
-
-    }
-
-    private fun reset() {
-        viewModel.resetImagePath()
-        binding.rectangleView.clear()
-        askCameraPermission()
-    }
-
     private val cameraRequestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -85,13 +63,9 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        cameraCapture = CameraCapture(ImageUriCreator(requireContext()))
-    }
-
     override fun initView() {
         super.initView()
+        cameraCapture = CameraCapture(ImageUriCreator(requireContext()))
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         lifecycleScope.launch {
@@ -105,20 +79,6 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
         cameraCapture.capturedImageUri.observe(viewLifecycleOwner) {
             onGettingImageUri(it)
         }
-
-        viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
-            val coordinates = listOf(RectF(100f, 200f, 500f, 600f))
-            drawDamageRectangle(coordinates)
-            lifecycleScope.launch {
-                val damageType = "HARD DAMAGE"
-                delay(1000L)
-                findNavController().navigate(
-                    R.id.action_cameraFragment_to_damageResultDialogFragment,
-                    bundleOf(DamageResultDialogFragment.ARGS_KEY_DAMAGE_TYPE to damageType)
-                )
-            }
-        }
-
         viewModel.isFlashOn.observe(viewLifecycleOwner) {
             cameraCapture.setFlashEnabled(it)
         }
@@ -164,14 +124,11 @@ class CameraFragment : BaseFragment(R.layout.fragment_camera) {
 
     private fun onGettingImageUri(imageUri: Uri?) {
         imageUri?.let {
-            viewModel.setImagePath(it)
-            binding.imageView.setImageURI(it)
+            findNavController().navigate(
+                R.id.action_cameraFragment_to_carDamageAnalyzeFragment,
+                bundleOf("imageUri" to it.toString())
+            )
         }
     }
-
-    private fun drawDamageRectangle(coordinates: List<RectF>) {
-        binding.rectangleView.drawRectBounds(coordinates)
-    }
-
 
 }

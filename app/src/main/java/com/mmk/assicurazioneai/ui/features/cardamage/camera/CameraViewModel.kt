@@ -14,48 +14,10 @@ import com.mmk.domain.model.onSuccess
 import com.mmk.domain.usecase.cardamage.GettingCarDamageUseCase
 import kotlinx.coroutines.delay
 
-class CameraViewModel(private val gettingCarDamageUseCase: GettingCarDamageUseCase) :
-    BaseViewModel() {
-
-    private var _sendingImageUiState: MutableLiveData<UiState> = MutableLiveData()
-    val sendingImageUiState: LiveData<UiState> = _sendingImageUiState
-
-    private val _onImageSent: MutableLiveData<SingleEvent<Unit>> = MutableLiveData()
-    val onImageSent: LiveData<SingleEvent<Unit>> = _onImageSent
-
-    private val _imagePath = MutableLiveData<String?>()
-    val imagePath: LiveData<String?> = _imagePath
-
+class CameraViewModel : BaseViewModel() {
     val isFlashOn = MutableLiveData(false)
 
     fun changeFlashMode() {
         isFlashOn.value = isFlashOn.value?.not()
-    }
-
-    fun sendImage() = executeUseCase(_sendingImageUiState) {
-        val imagePath: String? = _imagePath.value
-        val response = gettingCarDamageUseCase(imagePath)
-        response.onSuccess {
-            _onImageSent.value = SingleEvent(Unit)
-
-        }.onError {
-            when (it) {
-                ErrorEntity.ImageError.WrongFormat -> setErrorMessage(ErrorMessage.ResourceId(R.string.error_image_wrong_format))
-                else -> handleOtherErrorCases(it)
-            }
-        }
-    }
-
-    fun setImagePath(imageUri: Uri?) {
-
-        if (imageUri != null && imageUri.toString() != _imagePath.value) {
-            _imagePath.value = imageUri.toString()
-            sendImage()
-        }
-
-    }
-
-    fun resetImagePath() {
-        _imagePath.value = null
     }
 }
