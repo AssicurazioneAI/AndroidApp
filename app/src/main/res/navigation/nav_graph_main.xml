@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/cameraFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/cameraFragment"
@@ -80,7 +80,7 @@
         android:id="@+id/carDamageAnalyzeFragment"
         tools:layout="@layout/fragment_analyze_damage"
         android:name="com.mmk.assicurazioneai.ui.features.cardamage.analyze.CarDamageAnalyzeFragment"
-        android:label="CarDamageAnalyzeFragment" >
+        android:label="CarDamageAnalyzeFragment">
         <action
             android:id="@+id/action_carDamageAnalyzeFragment_to_damageResultDialogFragment"
             app:destination="@id/damageResultDialogFragment" />

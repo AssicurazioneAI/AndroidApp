@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val remoteSourceModule = module {
     val apiService = ApiServiceFactory.createCarApiService()
-    factory<CarRemoteDataSource> { FakeCarRemoteDataSource() }
+    factory<CarRemoteDataSource> { CarRemoteDataSourceImpl(apiService) }
 }
