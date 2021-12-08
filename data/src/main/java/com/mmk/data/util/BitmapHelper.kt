@@ -36,7 +36,7 @@ class BitmapHelper {
             val byteArray = byteArrayOutputStream.toByteArray()
             val encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP)
             byteArrayOutputStream.close()
-            val prefix = "data:image/jpeg;base64,"
+            val prefix = ""
             if (encodedImage.isNullOrEmpty().not())
                 return "$prefix$encodedImage"
             else null

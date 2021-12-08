@@ -8,6 +8,7 @@ import com.mmk.assicurazioneai.ui.base.BaseViewModel
 import com.mmk.assicurazioneai.ui.base.ErrorMessage
 import com.mmk.assicurazioneai.ui.base.UiState
 import com.mmk.assicurazioneai.utils.SingleEvent
+import com.mmk.domain.model.CarDamage
 import com.mmk.domain.model.error.ErrorEntity
 import com.mmk.domain.model.onError
 import com.mmk.domain.model.onSuccess
@@ -21,15 +22,15 @@ class CarDamageAnalyzeViewModel(private val gettingCarDamageUseCase: GettingCarD
     private val _imagePath: MutableLiveData<String> = MutableLiveData()
     val imagePath: LiveData<String> = _imagePath
 
-    private val _onImageSent: MutableLiveData<SingleEvent<Unit>> = MutableLiveData()
-    val onImageSent: LiveData<SingleEvent<Unit>> = _onImageSent
+    private val _onImageSent: MutableLiveData<SingleEvent<CarDamage>> = MutableLiveData()
+    val onImageSent: LiveData<SingleEvent<CarDamage>> = _onImageSent
 
 
     fun sendImage() = executeUseCase(_sendingImageUiState) {
 
         val response = gettingCarDamageUseCase(imagePath.value)
         response.onSuccess {
-            _onImageSent.value = SingleEvent(Unit)
+            _onImageSent.value = SingleEvent(it)
 
         }.onError {
             when (it) {

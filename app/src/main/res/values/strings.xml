@@ -31,4 +31,5 @@
     <string name="rate__btn">Rate</string>
     <string name="txt_btn_submit_photos">Analyze car</string>
     <string name="txt_btn_retake_photos">Retake photo</string>
+    <string name="text_damage_severity">Detected damage severity: %d light, %d medium, %d hard damages.</string>
 </resources>

@@ -1,22 +1,18 @@
 package com.mmk.assicurazioneai.ui.features.cardamage.analyze
 
 import android.graphics.RectF
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mmk.assicurazioneai.R
 import com.mmk.assicurazioneai.databinding.FragmentAnalyzeDamageBinding
 import com.mmk.assicurazioneai.ui.base.BaseFragment
-import com.mmk.assicurazioneai.ui.base.BaseViewModel
 import com.mmk.assicurazioneai.ui.features.cardamage.damageresult.DamageResultDialogFragment
 import com.mmk.assicurazioneai.utils.binding.viewBinding
 import com.mmk.assicurazioneai.utils.observeSingleEvent
@@ -62,24 +58,35 @@ class CarDamageAnalyzeFragment : BaseFragment(R.layout.fragment_analyze_damage) 
 
         viewModel.onImageSent.observeSingleEvent(viewLifecycleOwner) {
             val imageRectF = getImageBounds(binding.imageView)
-
+            binding.rectangleView.layoutParams.width = imageRectF.width().toInt()
+            binding.rectangleView.layoutParams.height = imageRectF.height().toInt()
+            binding.rectangleView.requestLayout()
             Timber.e(imageRectF.toString())
 
-            val coordinates = listOf(
-                RectF(
-                    imageRectF.centerX() - 100,
-                    imageRectF.centerY() - 100,
-                    imageRectF.centerX() + 100,
-                    imageRectF.centerY() + 100
-                )
-            )
-            drawDamageRectangle(coordinates)
+            val coordinates = mutableListOf<RectF>()
+            val scaleX = imageRectF.width() / 300f
+            val scaleY = imageRectF.height() / 200f
+            it.damagedPartList.forEach { damagedPart ->
+                if (damagedPart.coordinates.size == 4)
+                    coordinates.add(
+                        RectF(
+                            scaleX * damagedPart.coordinates[0],
+                            scaleY * damagedPart.coordinates[1],
+                            scaleX * damagedPart.coordinates[2],
+                            scaleY * damagedPart.coordinates[3],
+
+                            )
+                    )
+            }
+
+            drawDamageRectangle(coordinates, it.damagedPartList.map { damagedPart ->
+                damagedPart.severity
+            })
             lifecycleScope.launch {
-                val damageType = "HARD DAMAGE"
                 delay(1000L)
                 findNavController().navigate(
                     R.id.action_carDamageAnalyzeFragment_to_damageResultDialogFragment,
-                    bundleOf(DamageResultDialogFragment.ARGS_KEY_DAMAGE_TYPE to damageType)
+                    bundleOf(DamageResultDialogFragment.ARGS_KEY_CAR_DAMAGE to it)
                 )
             }
         }
@@ -97,8 +104,11 @@ class CarDamageAnalyzeFragment : BaseFragment(R.layout.fragment_analyze_damage) 
         }
     }
 
-    private fun drawDamageRectangle(coordinates: List<RectF>) {
-        binding.rectangleView.drawRectBounds(coordinates)
+    private fun drawDamageRectangle(coordinates: List<RectF>, severityList: List<String>) {
+
+        binding.rectangleView.drawRectBounds(coordinates,severityList)
+//        binding.rectangleView.scaleX = scaleX
+//        binding.rectangleView.scaleY = scaleY
     }
 
     private fun changeBottomSheetState(view: View, state: Int) {

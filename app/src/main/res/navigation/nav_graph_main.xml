@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/cameraFragment">
 
     <fragment
         android:id="@+id/cameraFragment"
@@ -67,9 +67,8 @@
             app:popUpToInclusive="true"
             app:destination="@id/rateResultDialogFragment" />
         <argument
-            android:name="damageResultType"
-            android:defaultValue=""
-            app:argType="string" />
+            android:name="carDamage"
+            app:argType="com.mmk.domain.model.CarDamage" />
     </dialog>
 
     <dialog

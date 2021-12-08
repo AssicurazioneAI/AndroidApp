@@ -4,6 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import com.mmk.data.repository.CarRepositoryImpl
 import com.mmk.data.source.remote.car.CarDamageResponse
 import com.mmk.data.source.remote.car.CarRemoteDataSource
+import com.mmk.data.source.remote.car.CarRemoteDataSourceImpl
+import com.mmk.data.source.remote.network.ApiServiceFactory
 import com.mmk.data.util.ImageHelper
 import com.mmk.domain.model.CarDamage
 import com.mmk.domain.model.Result
@@ -104,5 +106,7 @@ class CarRepositoryImplTest {
             response as Result.Error
             assertThat(response.errorEntity).isInstanceOf(ErrorEntity.ImageError.WrongFormat::class.java)
         }
+
+
 
 }

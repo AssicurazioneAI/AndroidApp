@@ -8,10 +8,13 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.mmk.assicurazioneai.R
+import com.mmk.domain.model.CarDamage
 
 class RectOverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private val rectangleCoordinates: MutableList<RectF> = mutableListOf()
+    private val mSeverityList: MutableList<String> = mutableListOf()
+
 
     private val paint = Paint().apply {
         style = Paint.Style.FILL_AND_STROKE
@@ -19,20 +22,38 @@ class RectOverlayView(context: Context?, attrs: AttributeSet?) : View(context, a
         strokeWidth = 10f
     }
 
-    fun drawRectBounds(rectBounds: List<RectF>) {
+    fun drawRectBounds(rectBounds: List<RectF>, severityList: List<String>) {
         rectangleCoordinates.clear()
         rectangleCoordinates.addAll(rectBounds)
+
+        mSeverityList.clear()
+        mSeverityList.addAll(severityList)
+
         invalidate()
     }
 
-    fun clear(){
+    fun clear() {
         rectangleCoordinates.clear()
         invalidate()
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        rectangleCoordinates.forEach { canvas?.drawRect(it, paint) }
+        rectangleCoordinates.forEachIndexed { index, rectF ->
+            paint.color = when (mSeverityList[index]) {
+                CarDamage.DamagedPart.SEVERITY_LIGHT -> ContextCompat.getColor(
+                    context!!,
+                    R.color.greenAlpha
+                )
+                CarDamage.DamagedPart.SEVERITY_MEDIUM -> ContextCompat.getColor(
+                    context!!,
+                    R.color.yellowAlpha
+                )
+                else -> ContextCompat.getColor(context!!, R.color.redAlpha)
+            }
+            canvas?.drawRect(rectF, paint)
+
+        }
     }
 
 }
